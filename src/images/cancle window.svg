@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="74.622" height="73" viewBox="0 0 74.622 73">
+  <g id="Group_3303" data-name="Group 3303" transform="translate(-241.498 -585.529)">
+    <path id="Path_1623" data-name="Path 1623" d="M37.311,0C57.918,0,74.622,16.342,74.622,36.5S57.918,73,37.311,73,0,56.659,0,36.5,16.7,0,37.311,0Z" transform="translate(241.498 585.529)" fill="#11db8e"/>
+    <g id="Icon_feather-delete" data-name="Icon feather-delete" transform="translate(264.514 610.117)">
+      <path id="Path_231" data-name="Path 231" d="M46.445,13.5,18,41.945" transform="translate(-18 -13.5)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path id="Path_232" data-name="Path 232" d="M18,13.5,46.445,41.945" transform="translate(-18 -13.5)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+    </g>
+  </g>
+</svg>
