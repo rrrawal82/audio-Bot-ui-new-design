@@ -29,7 +29,9 @@ export default class AudioDemo extends Component {
       blobURL: '',
       isBlocked: false,
       newVideo:false,
-      micDisable:false
+      micDisable:false,
+      dragOver: false, // State to track drag over effect
+      files: [], // State to store dropped files
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -118,39 +120,102 @@ export default class AudioDemo extends Component {
      handleVideoPlaying=()=>{
       this.setState({ micDisable: true });
      }
+
+     handleDragEnter = (e) => {
+      e.preventDefault();
+      this.setState({ dragOver: true });
+    };
+    
+    handleDragOver = (e) => {
+      e.preventDefault();
+    };
+    
+    handleDragLeave = (e) => {
+      e.preventDefault();
+      this.setState({ dragOver: false });
+    };
+    
+    handleDrop = (e) => {
+      e.preventDefault();
+      this.setState({ dragOver: false });
+      const files = [...e.dataTransfer.files];
+      this.setState({ files: [...this.state.files, ...files] });
+    };
+    
+
+  uploadFiles = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(file)
+    if(file.length!=0)
+    {
+      try {
+        const res = await axios.post("/api/upload", formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('File uploaded successfully:', res.data);
+        // Handle success or update UI accordingly
+      } catch (err) {
+        console.error('Error uploading file:', err);
+        // Handle error or update UI accordingly
+      }
+    }else{
+      alert('Select atleast one file to upload.')
+    }
+  }
  render()
    {
   return (
     <div className="App" style={{ position: 'relative'}}>
-         <Card style={{ position:'absolute', top: '80px', left: '25%',width:'50%', height:'60%' }}>
+         <Card style={{ position:'absolute', top: '40px', left: '25%',width:'50%', height:'90%' }}>
             <Card.Body>
-              <Card.Title style={{color:'#ff6600',marginTop:'20px',fontSize: '1.875em'}} >UPLOAD FILES</Card.Title>
+              <Card.Title style={{color:'#ff6600',marginTop:'0px',fontSize: '1.875em'}} >UPLOAD FILES</Card.Title>
               <Card.Text style={{top: '13px'}}>
-                 <Card style={{position:'absolute', top: '80px', left: '10%',width:'80%', height:'50%', border:'1px',borderStyle: 'dotted',borderColor:'grey'}}>
+                 <Card 
+                 style={{position:'absolute', top: '60px', left: '10%',width:'80%', height:'80%', border:'1px',
+                 borderStyle: 'dotted',borderColor:'grey',
+                 borderColor: this.state.dragOver ? 'blue' : 'grey', // Highlight border on drag over
+                }}
+                 onDragOver={this.handleDragOver}
+                 onDragEnter={this.handleDragEnter}
+                 onDragLeave={this.handleDragLeave}
+                 onDrop={this.handleDrop}
+                 >
                     <Card.Body>
                       <BsFiles size = '50px' color="#0073e6"  style={{top: '80px'}}/>
                       <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop</b></p>
+                      {this.state.files.length > 0 && (
+                        <div style={{ marginTop: '20px' }}>
+                          <h5>Files to Upload:</h5>
+                          <ul>
+                            {this.state.files.map((file, index) => (
+                              <li key={index}>{file.name} - {file.size} bytes</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                       <p>Only PDF , XLS , DOC and PPT files . </p>
-                      
-                     <img src={pdxp} style={{width:'60%',marginTop:'20px'}}></img>
-                     <Button  class="open-button" id="myBtn"  
-                     style= {{color:'white', backgroundColor:'#3385ff',padding:'13px 20px',border: 'none', borderRadius:'40px',cursor:'pointer',width:'200px',marginTop:'15px'}}>SAVE FILES</Button>
+                     
+                    
                     </Card.Body>
-                  </Card>
-                 
+                   </Card>
               </Card.Text>
-             
             </Card.Body>
-
+            <Button  class="open-button" id="myBtn"  
+              style= {{color:'white', backgroundColor:'#3385ff',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'38%',marginTop:'-3%'}}
+              onClick={() => this.uploadFiles(this.state.files)}       
+              >SAVE FILES</Button>
             </Card>
-          
-        <img src={pbi} style={{width:'100%'}}></img>
-        <div class="main" style={{position:'fixed',bottom: '23px',right: '28px', display:'block'}}>
+           
+        <img src={pbi} style={{width:'85%'}}></img>
+         {/* <div class="main" style={{position:'fixed',bottom: '23px',right: '28px', display:'block'}}>
             <img src={MaskGroup} style={{borderRadius:'50%',width:'90%',border:'5px solid black',marginBottom:'5px'}}/><br/>
            
             <button class="open-button" id="myBtn"  onClick={this.handleShow}
             style= {{backgroundColor:'#010000',color:'white',padding:'13px 20px',border: 'none', borderRadius:'8px',cursor:'pointer',width:'200px'}}>Ask about it</button>
-        </div> 
+        </div> */}
     
           <Modal show={this.state.show} onHide={this.handleClose} size="lg">
             <Modal.Header  style={{backgroundColor:'black'}}>
