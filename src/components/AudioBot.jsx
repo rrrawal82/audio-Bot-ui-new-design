@@ -148,28 +148,28 @@ export default class AudioDemo extends Component {
       console.log(this.state.files)
     };
 
-    uploadFiles = async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log(file)
-    if(file.length!=0)
-    {
-      try {
-        const res = await axios.post("http://localhost:5000/upload", formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-        console.log('File uploaded successfully:', res.data);
-        // Handle success or update UI accordingly
-      } catch (err) {
-        console.error('Error uploading file:', err);
-        // Handle error or update UI accordingly
+    uploadFiles = async () => {
+      const formData = new FormData();
+      this.state.files.forEach(file => {
+        formData.append('file', file);
+      });
+  
+      if (this.state.files.length !== 0) {
+        try {
+          const res = await axios.post("http://localhost:5000/upload_document", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          console.log('File uploaded successfully:', res.data);
+        } catch (err) {
+          console.error('Error uploading file:', err);
+        }
+      } else {
+        alert('Select at least one file to upload.');
       }
-    }else{
-      alert('Select atleast one file to upload.')
-    }
-  }
+    };
+  
  render()
    {
   return (
