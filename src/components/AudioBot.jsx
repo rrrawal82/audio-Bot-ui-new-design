@@ -189,15 +189,15 @@ export default class AudioDemo extends Component {
                  onDrop={this.handleDrop}
                  >
                     <Card.Body>
-                      <BsFiles size = '50px' color="#0073e6"  style={{top: '80px'}}/>
+                      <BsFiles size = '50px' color="#3385ff"  style={{top: '80px'}}/>
                       <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop  </b>
-                      </p><p><b>Or</b></p>
+                      </p><p style={{ fontSize: '1.2em',color:'grey'}}><b>Or</b></p>
                       <input  type="file"  multiple
                         ref={fileInput => this.fileInput = fileInput}
                         onChange={this.handleAddFile}  
-                        style={{ marginLeft: '20%' }}
+                        style= {{color:'white', backgroundColor:'#3385ff',border: 'none',cursor:'pointer',marginLeft:'2%'}}
                       />
-                      \ <p>(Only PDF , XLS , DOC and PPT files . )</p>
+                       <p>(Only PDF , XLS , DOC and PPT files . )</p>
                      
                     
                       {this.state.files.length > 0 && (
