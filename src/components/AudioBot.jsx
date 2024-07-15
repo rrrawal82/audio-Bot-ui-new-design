@@ -141,9 +141,14 @@ export default class AudioDemo extends Component {
       const files = [...e.dataTransfer.files];
       this.setState({ files: [...this.state.files, ...files] });
     };
-    
 
-  uploadFiles = async (file) => {
+    handleAddFile=(e)=>{
+      const files = e.target.files;
+      this.setState({ files: [...this.state.files, ...files] });
+      console.log(this.state.files)
+    };
+
+    uploadFiles = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
     console.log(file)
@@ -185,10 +190,19 @@ export default class AudioDemo extends Component {
                  >
                     <Card.Body>
                       <BsFiles size = '50px' color="#0073e6"  style={{top: '80px'}}/>
-                      <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop</b></p>
+                      <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop  </b>
+                      </p><p><b>Or</b></p>
+                      <input  type="file"  multiple
+                        ref={fileInput => this.fileInput = fileInput}
+                        onChange={this.handleAddFile}  
+                        style={{ marginLeft: '20%' }}
+                      />
+                      \ <p>(Only PDF , XLS , DOC and PPT files . )</p>
+                     
+                    
                       {this.state.files.length > 0 && (
                         <div style={{ marginTop: '20px' }}>
-                          <h5>Files to Upload:</h5>
+                         
                           <ul>
                             {this.state.files.map((file, index) => (
                               <li key={index}>{file.name} - {file.size} bytes</li>
@@ -196,9 +210,7 @@ export default class AudioDemo extends Component {
                           </ul>
                         </div>
                       )}
-                      <p>Only PDF , XLS , DOC and PPT files . </p>
                      
-                    
                     </Card.Body>
                    </Card>
               </Card.Text>
