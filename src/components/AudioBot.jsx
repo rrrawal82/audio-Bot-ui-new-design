@@ -139,7 +139,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         <div style={{height:'92vh'}}>
         <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
             <Card.Body>
-              <Card.Title style={{color:'#ff6600',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
+              <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
               <Card.Text style={{top: '13px'}}>
                  <Card 
                  style={{position:'absolute', top: '100px', left: '10%',width:'80%', height:'80%', border:'1px',
@@ -162,7 +162,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                       />
                        <p>(Only PDF , XLS , DOC and PPT files . )</p>
                        <Button  class="open-button" id="myBtn"  
-                      style= {{color:'white', backgroundColor:'#3385ff',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'10%',marginTop:'-3%',zIndex:'10000',marginBottom:'5%'}}
+                      style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-3%',zIndex:'10000',marginBottom:'5%'}}
                       onClick={() => this.uploadFiles(this.state.files)}       
                       >SAVE FILES</Button>
                     

@@ -3,6 +3,7 @@ import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider }
 import {Navbar ,AudioBot,AudioDemo, Main,AiVoiceChat} from './components';
 import './App.css';
 const Layout =()=>{
+  
   return (
      <div >
      
