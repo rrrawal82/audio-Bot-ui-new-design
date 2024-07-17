@@ -160,7 +160,7 @@ export default class AiVoiceChat extends Component {
       backgroundRepeat: "no-repeat",
     };
     return (
-      <div className="App" style={backgroundStyle} >
+      <div className="App"  >
          <div className="row" style={{backgroundColor:'black',height:'500px',marginTop:'5%'}}>
               <div className="col-sm">
                 <video  style={{marginTop:'-50%', width:'100%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
