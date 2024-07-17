@@ -72,7 +72,7 @@ export default class AiVoiceChat extends Component {
         // Send base64 audio to the backend
         try {
           const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio });
-          const newVideoURL = `http://localhost:5000${response.data.output_video_url}`;
+          const newVideoURL = response.data.output_video_url;
           this.setState({ videoURL: newVideoURL, newVideo: true });
           this.setState({ output_video_url: response.data.output_video_url });
           this.setState({ question: response.data.transcript_text });
@@ -133,9 +133,9 @@ export default class AiVoiceChat extends Component {
         // const response = await axios.post("http://localhost:5000/ask_question", { question: question });
         // if (response.data) {
           this.setState({ question: question });
-          this.setState({ answer: "It allows you to create complex user interfaces using “components,” or small, self-contained pieces of code. It controls the view layer in web applications. Despite the fact that React is more of a library than a language, it is frequently used in web development." });
+          //this.setState({ answer: "It allows you to create complex user interfaces using “components,” or small, self-contained pieces of code. It controls the view layer in web applications. Despite the fact that React is more of a library than a language, it is frequently used in web development." });
           this.setState({ userInput: '' })
-          //this.setState({ answer: response.data.response });
+          this.setState({ answer: response.data.response });
        // }
       }
     } catch (err) {
@@ -155,7 +155,7 @@ export default class AiVoiceChat extends Component {
       <div className="App" style={{height:'500px'}} >
          <div className="row" style={{backgroundColor:'black',height:'500px',marginTop:'5%'}}>
               <div className="col-sm">
-                <video  style={{marginTop:'5%', width:'100%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
+                <video  style={{marginTop:'-50%', width:'90%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
                 {this.state.isRecording ? (
