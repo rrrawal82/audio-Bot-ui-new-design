@@ -1,12 +1,13 @@
 import React, { Component,useState ,useEffect, useRef,createRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import logo from '../images/quickparts_logo.JPG';
-import pbi from '../images/background.jpg';
 import pdxp from '../images/pdf-doc-xls-ppt.jpg';
 import MaskGroup from '../images/MaskGroup.png'
+import BackgroundImage from '../images/background.jpg';
 import mic from '../images/mic.png'
 import record from '../images/record.png'
 import chat from '../images/chat.png'
@@ -16,8 +17,9 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import { BsFiles } from "react-icons/bs";
+
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
-export default class AudioDemo extends Component {
+ class AudioDemo extends Component {
 
    constructor(props) {
     super(props);
@@ -36,90 +38,22 @@ export default class AudioDemo extends Component {
     
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+   
    }
-   videoEl = createRef(); 
+
    componentDidMount(){
-    console.log(this.state.newVideo)
-      navigator.getUserMedia({ audio: true },
-        () => {
-          console.log('Permission Granted');
-          this.setState({ isBlocked: false });
-        },
-        () => {
-          console.log('Permission Denied');
-          this.setState({ isBlocked: true })
-        },
-      );
+   // console.log(this.state.newVideo)
+    
    } 
-    start = () => {
-        if (this.state.isBlocked) {
-          console.log('Permission Denied');
-        } else {
-          Mp3Recorder
-            .start()
-            .then(() => {
-              this.setState({ newVideo: false });
-              this.setState({ isRecording: true });
-            }).catch((e) => console.error(e));
-        }
-      };
-      stop = () => {
-        Mp3Recorder
-          .stop()
-          .getMp3()
-          .then(async([buffer, blob]) => {
-           const blobURL = URL.createObjectURL(blob)
-           const file = new File(buffer, 'audio.mp3', {
-            type: blob.type,
-            lastModified: Date.now()
-           });
-            let baseAudio=await this.audioToBase64(file) 
-            //console.log(baseAudio)
-            this.setVideo();
-            //call API
-            try{
-              const res = await axios.post("/auth/register", baseAudio)
-              
-            }catch(err){
-              //this.setError(err.response.data)
-            }
-
-            this.setState({ blobURL, isRecording: false });
-          }).catch((e) => console.log(e));
-
-      };
-      audioToBase64 = async(audioFile)=> {
-        return new Promise((resolve, reject) => {
-          let reader = new FileReader();
-          reader.onerror = reject;
-          reader.onload = (e) => resolve(e.target.result);
-          reader.readAsDataURL(audioFile);
-        });
-      }
-
-      setVideo = () => {
-        let vid = document.getElementById("chatVideo");
-        vid.src = newVideoUrl;
-        this.setState({ newVideo: true });
-        console.log(this.state.newVideo)
-             //this.setState({ videoUrl: require('../images/new-video.mp4') });
-        
-      }
+  
+   
       handleClose() {
         this.setState({ show: false });
       }
       handleShow() {
         this.setState({ show: true });
       }
-      handleVideoEnd = () => {
-        let vid = document.getElementById("chatVideo");
-        vid.src = videoUrl;
-        this.setState({ micDisable: false });
-        console. log("The video has ended");
-     };
-     handleVideoPlaying=()=>{
-      this.setState({ micDisable: true });
-     }
+    
 
      handleDragEnter = (e) => {
       e.preventDefault();
@@ -155,6 +89,15 @@ export default class AudioDemo extends Component {
       });
   
       if (this.state.files.length !== 0) {
+        this.setState({ uploading: true });
+        const config = {
+          onUploadProgress: progressEvent => {
+            const { loaded, total } = progressEvent;
+            const progress = Math.round((loaded * 100) / total);
+            this.setState({ uploadProgress: progress });
+          },
+        };
+
         try {
           const res = await axios.post("http://localhost:5000/upload_document", formData, {
             headers: {
@@ -162,24 +105,44 @@ export default class AudioDemo extends Component {
             }
           });
           console.log('File uploaded successfully:', res.data);
+          if(res.data)
+          {
+            this.props.navigate('/chatbot');
+          }
         } catch (err) {
           console.error('Error uploading file:', err);
         }
+       
       } else {
         alert('Select at least one file to upload.');
       }
-    };
+ };
   
  render()
-   {
+ {
+  const backgroundStyle = {
+    backgroundImage:`url(${BackgroundImage})`,
+    height: "96vh",
+    marginTop: "2%",
+    //fontSize: "50px",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
+    
   return (
-    <div className="App" style={{ position: 'relative'}}>
-         <Card style={{ position:'absolute', top: '40px', left: '25%',width:'50%', height:'90%' }}>
+    <div className="App container"style={backgroundStyle} >
+      <div className='row' >
+        <div className='col-sm'  >
+          
+        </div>  
+        <div className='col-sm'> 
+        <div style={{height:'92vh'}}>
+        <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
             <Card.Body>
-              <Card.Title style={{color:'#ff6600',marginTop:'0px',fontSize: '1.875em'}} >UPLOAD FILES</Card.Title>
+              <Card.Title style={{color:'#ff6600',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
               <Card.Text style={{top: '13px'}}>
                  <Card 
-                 style={{position:'absolute', top: '60px', left: '10%',width:'80%', height:'80%', border:'1px',
+                 style={{position:'absolute', top: '100px', left: '10%',width:'80%', height:'80%', border:'1px',
                  borderStyle: 'dotted',borderColor:'grey',
                  borderColor: this.state.dragOver ? 'blue' : 'grey', // Highlight border on drag over
                 }}
@@ -190,15 +153,18 @@ export default class AudioDemo extends Component {
                  >
                     <Card.Body>
                       <BsFiles size = '50px' color="#3385ff"  style={{top: '80px'}}/>
-                      <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop  </b>
+                      <p style={{ fontSize: '1.2em',marginTop:'20px',color:'grey'}}><b>Drag & Drop an image here </b>
                       </p><p style={{ fontSize: '1.2em',color:'grey'}}><b>Or</b></p>
                       <input  type="file"  multiple
                         ref={fileInput => this.fileInput = fileInput}
                         onChange={this.handleAddFile}  
-                        style= {{color:'white', backgroundColor:'#3385ff',border: 'none',cursor:'pointer',marginLeft:'2%'}}
+                        style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%'}}
                       />
                        <p>(Only PDF , XLS , DOC and PPT files . )</p>
-                     
+                       <Button  class="open-button" id="myBtn"  
+                      style= {{color:'white', backgroundColor:'#3385ff',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'10%',marginTop:'-3%',zIndex:'10000',marginBottom:'5%'}}
+                      onClick={() => this.uploadFiles(this.state.files)}       
+                      >SAVE FILES</Button>
                     
                       {this.state.files.length > 0 && (
                         <div style={{ marginTop: '20px' }}>
@@ -215,59 +181,20 @@ export default class AudioDemo extends Component {
                    </Card>
               </Card.Text>
             </Card.Body>
-            <Button  class="open-button" id="myBtn"  
-              style= {{color:'white', backgroundColor:'#3385ff',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'38%',marginTop:'-3%'}}
-              onClick={() => this.uploadFiles(this.state.files)}       
-              >SAVE FILES</Button>
+           
             </Card>
-           
-        <img src={pbi} style={{width:'85%'}}></img>
-         {/* <div class="main" style={{position:'fixed',bottom: '23px',right: '28px', display:'block'}}>
-            <img src={MaskGroup} style={{borderRadius:'50%',width:'90%',border:'5px solid black',marginBottom:'5px'}}/><br/>
-           
-            <button class="open-button" id="myBtn"  onClick={this.handleShow}
-            style= {{backgroundColor:'#010000',color:'white',padding:'13px 20px',border: 'none', borderRadius:'8px',cursor:'pointer',width:'200px'}}>Ask about it</button>
-        </div> */}
-    
-          <Modal show={this.state.show} onHide={this.handleClose} size="lg">
-            <Modal.Header  style={{backgroundColor:'black'}}>
-              <Button variant="secondary" onClick={this.handleClose}>
-                Close
-              </Button>
-            </Modal.Header>
-            <Modal.Body style={{backgroundColor:'black',width:'100%'}}>
-              <div>
-              <video width="750" height="500" autoPlay loop={this.props.newVideo} onplaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo" >
-                  <source src={videoUrl} type="video/mp4"/>
-              </video>
-                   {/* <video
-                  style={{ maxWidth: "100%", width: "1000px", margin: "0 auto" }}
-                  playsInline
-                  loop
-                  muted
-                  alt="All the devices"
-                  src={chatVideo}
-                  ref={this.videoEl}
-                />  */}
-              </div>
-            </Modal.Body>
-            <Modal.Footer style={{backgroundColor:'black'}}>
-              {this.state.micDisable}
-             {this.state.isRecording?(
-              <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable} >
-                <img src={record}  height="55"/>
-              </Button>
-              ) : (  <Button variant="secondary" onClick={this.start} disabled={this.state.isRecording} >
-                <img src={mic}  height="55"/>
-              </Button>)}
-              <Button variant="primary" >
-                 <img src={chat} height="55" />
-              </Button>
-            <audio src={this.state.blobURL} controls="controls" />
-            </Modal.Footer>
-          </Modal>       
+            </div>
+        </div>
+       </div>       
     </div>
   );
 }
+
+}
+function WithNavigate(props) {
+  let navigate = useNavigate();
+  return <AudioDemo {...props} navigate={navigate} />
+  
 }
 
+export default WithNavigate
