@@ -130,13 +130,13 @@ export default class AiVoiceChat extends Component {
     try {
       const question = this.state.userInput;
       if (question !== '') {
-        // const response = await axios.post("http://localhost:5000/ask_question", { question: question });
-        // if (response.data) {
+         const response = await axios.post("http://localhost:5000/ask_question", { question: question });
+         if (response.data) {
           this.setState({ question: question });
           //this.setState({ answer: "It allows you to create complex user interfaces using “components,” or small, self-contained pieces of code. It controls the view layer in web applications. Despite the fact that React is more of a library than a language, it is frequently used in web development." });
           this.setState({ userInput: '' })
           this.setState({ answer: response.data.response });
-       // }
+        }
       }
     } catch (err) {
       console.error(err);
