@@ -35,6 +35,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
       micDisable:false,
       dragOver: false, // State to track drag over effect
       files: [], // State to store dropped files
+      uploadProgress: 0, // Track upload progress percentage
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -91,19 +92,21 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
   
       if (this.state.files.length !== 0) {
         this.setState({ uploading: true });
-        const config = {
-          onUploadProgress: progressEvent => {
-            const { loaded, total } = progressEvent;
-            const progress = Math.round((loaded * 100) / total);
-            this.setState({ uploadProgress: progress });
-          },
-        };
-
+       
         try {
+
+
+          const config = {
+            onUploadProgress: progressEvent => {
+              const { loaded, total } = progressEvent;
+              const progress = Math.round((loaded * 100) / total);
+              this.setState({ uploadProgress: progress });
+            },
+          };
           const res = await axios.post("http://localhost:5000/upload_document", formData, {
-            headers: {
+          headers: {
               'Content-Type': 'multipart/form-data'
-            }
+          }
           });
           console.log('File uploaded successfully:', res.data);
           if(res.data)
@@ -112,6 +115,8 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
           }
         } catch (err) {
           console.error('Error uploading file:', err);
+        } finally {
+          this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
         }
        
       } else {
@@ -159,11 +164,29 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                         style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%'}}
                       />
                        <p>(Only PDF , XLS , DOC and PPT files . )</p>
+                       <br>
+                       </br>
+                       
                        <Button  class="open-button" id="myBtn"  
                       style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-3%',zIndex:'10000',marginBottom:'5%'}}
                       onClick={() => this.uploadFiles(this.state.files)}       
                       >Save Files</Button>
-                    
+                       <br></br>
+                     {this.state.uploading && (
+                        <div className="progress" style={{ marginTop: '-10px' }}>
+                          <div
+                            className="progress-bar"
+                            role="progressbar"
+                            style={{ width: `${this.state.uploadProgress}%` }}
+                            aria-valuenow={this.state.uploadProgress}
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                          >
+                            {this.state.uploadProgress}%
+                          </div>
+                        </div>
+                      )}
+                     
                       {this.state.files.length > 0 && (
                         <div style={{ marginTop: '20px' }}>
                          

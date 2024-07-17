@@ -11,7 +11,7 @@ import record from '../images/record.png';
 import chat from '../images/chat.png';
 import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
-
+import BackgroundImage from '../images/background.jpg';
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AiVoiceChat extends Component {
@@ -151,8 +151,16 @@ export default class AiVoiceChat extends Component {
     this.setState({ userInput: e.target.value });
   };
   render() {
+    const backgroundStyle = {
+      backgroundImage:`url(${BackgroundImage})`,
+      height: "96vh",
+      marginTop: "2%",
+      //fontSize: "50px",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+    };
     return (
-      <div className="App" style={{height:'500px'}} >
+      <div className="App" style={backgroundStyle} >
          <div className="row" style={{backgroundColor:'black',height:'500px',marginTop:'5%'}}>
               <div className="col-sm">
                 <video  style={{marginTop:'-50%', width:'100%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
