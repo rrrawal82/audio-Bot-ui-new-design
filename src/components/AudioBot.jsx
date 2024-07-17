@@ -16,6 +16,7 @@ import newVideoUrl from '../images/new-video.mp4'
 import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
+import videoImg from '../images/upload.svg'
 import { BsFiles } from "react-icons/bs";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -99,16 +100,16 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         };
 
         try {
-          // const res = await axios.post("http://localhost:5000/upload_document", formData, {
-          //   headers: {
-          //     'Content-Type': 'multipart/form-data'
-          //   }
-          // });
-          // console.log('File uploaded successfully:', res.data);
-          // if(res.data)
-          // {
+          const res = await axios.post("http://localhost:5000/upload_document", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          console.log('File uploaded successfully:', res.data);
+          if(res.data)
+          {
             this.props.navigate('/chatbot');
-          // }
+          }
         } catch (err) {
           console.error('Error uploading file:', err);
         }

@@ -155,11 +155,11 @@ export default class AiVoiceChat extends Component {
       <div className="App" style={{height:'500px'}} >
          <div className="row" style={{backgroundColor:'black',height:'500px',marginTop:'5%'}}>
               <div className="col-sm">
-                <video  style={{marginTop:'-50%', width:'90%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
+                <video  style={{marginTop:'-50%', width:'100%',height:'100%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
                 {this.state.isRecording ? (
-                 <div >
+                 <div style={{marginTop:'-50%'}} >
                     <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable} style={{float:'right'}}>
                     <img src={record} height="45" alt="record" />
                     </Button><br></br>
@@ -170,7 +170,7 @@ export default class AiVoiceChat extends Component {
                         ) }
                 </div>
                 ) : (
-                <div >
+                <div style={{marginTop:'-55%'}}>
                     <Button variant="secondary" onClick={this.start} disabled={this.state.isRecording} style={{float:'right'}}>
                     <img src={mic} height="45" alt="mic" />
                     </Button>
