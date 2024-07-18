@@ -156,7 +156,7 @@ export default class AiVoiceChat extends Component {
       height: "96vh",
       marginTop: "2%",
       //fontSize: "50px",
-      backgroundSize: "cover",
+      backgroundSize: "contain ",
       backgroundRepeat: "no-repeat",
     };
     return (
