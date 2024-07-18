@@ -80,6 +80,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
     };
 
     handleAddFile=(e)=>{
+      this.state.files=[]
       const files = e.target.files;
       this.setState({ files: [...this.state.files, ...files] });
       console.log(this.state.files)
@@ -95,9 +96,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         this.setState({ uploading: true });
        
         try {
-
-
-          const config = {
+            const config = {
             onUploadProgress: progressEvent => {
               const { loaded, total } = progressEvent;
               const progress = Math.round((loaded * 100) / total);
