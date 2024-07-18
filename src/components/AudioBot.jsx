@@ -103,16 +103,16 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
               this.setState({ uploadProgress: progress });
             },
           };
-          const res = await axios.post("http://localhost:5000/upload_document", formData, {
-           headers: {
-              'Content-Type': 'multipart/form-data'
-           }
-           });
+            const res = await axios.post("http://localhost:5000/upload_document", formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data'
+            }
+            });
           //console.log('File uploaded successfully:', res.data);
            if(res.data)
            {
               this.props.navigate('/chatbot');
-           }
+            }
         } catch (err) {
           console.error('Error uploading file:', err);
         } finally {
