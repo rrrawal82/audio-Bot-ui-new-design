@@ -18,6 +18,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import uploadImg from '../images/uploadImg.jpg'
 import { BsFiles } from "react-icons/bs";
+import { CgOverflow } from 'react-icons/cg';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
  class AudioDemo extends Component {
@@ -142,13 +143,13 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
           
         </div>  
         <div className='col-sm'> 
-        <div style={{height:'92vh'}}>
+        <div >
         <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
             <Card.Body>
               <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
               <Card.Text style={{top: '13px'}}>
                  <Card 
-                 style={{position:'absolute', top: '100px', left: '10%',width:'80%', height:'80%', border:'dotted 2px grey'  }}
+                 style={{position:'absolute', top: '80px', left: '10%',width:'80%', height:'70vh', border:'dotted 2px grey'  }}
                  onDragOver={this.handleDragOver}
                  onDragEnter={this.handleDragEnter}
                  onDragLeave={this.handleDragLeave}
@@ -156,7 +157,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                  >
                     <Card.Body>
                       <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px'}}/>
-                      <p style={{ fontSize: '1.2em',marginTop:'20px',color:'black'}}><b>Drag & Drop an image here </b>
+                      <p style={{ fontSize: '1.2em',marginTop:'10px',color:'black'}}><b>Drag & Drop an image here </b>
                       </p><p style={{ fontSize: '1.0em',color:'black'}}><b>Or</b></p>
                       <input  type="file"  multiple
                         ref={fileInput => this.fileInput = fileInput}
@@ -168,7 +169,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                        </br>
                        
                        <Button  class="open-button" id="myBtn"  
-                      style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-3%',zIndex:'10000',marginBottom:'5%'}}
+                      style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-7%',zIndex:'10000',marginBottom:'5%'}}
                       onClick={() => this.uploadFiles(this.state.files)}       
                       >Save Files</Button>
                        <br></br>
@@ -188,7 +189,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                       )}
                      
                       {this.state.files.length > 0 && (
-                        <div style={{ marginTop: '20px' }}>
+                        <div style={{ marginTop: '3px',overflowY:'scroll',maxHeight:'100px' }}>
                          
                           <ul>
                             {this.state.files.map((file, index) => (
