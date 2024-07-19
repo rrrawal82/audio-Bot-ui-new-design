@@ -177,13 +177,14 @@ export default class AudioDemo extends Component {
                     <textarea
                     onChange={this.handleInputChange} 
                     value={this.state.userInput}
-                    style={{width:'415px',border:'0px',padding:'5px',fontSize:'12px',cologreyr:''}} placeholder='Type your message'/>
-                    <Button className="open-button" id="myBtn" 
-                    style={{ backgroundColor:'#ebebe0', color: 'blue', padding: '5px 5px', border: 'none', 
-                    borderRadius: '8px', cursor: 'pointer', width: '40px',fontSize:'10px',float:'right' }} 
-                    onClick={this.sendQuestion}
-                    rows={4}
-                    >SEND</Button>
+                    style={{width:'415px',border:'0px',padding:'5px',fontSize:'12px',cologreyr:''}} placeholder='Type your message'>
+                        <Button className="open-button" id="myBtn" 
+                        style={{ backgroundColor:'#ebebe0', color: 'blue', padding: '5px 5px', border: 'none', 
+                        borderRadius: '8px', cursor: 'pointer', width: '40px',fontSize:'10px',float:'right' }} 
+                        onClick={this.sendQuestion}
+                        rows={4}
+                        >SEND</Button>
+                    </textarea>
                   </div>
               </div>
              

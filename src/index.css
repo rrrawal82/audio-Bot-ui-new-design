@@ -15,3 +15,29 @@ code {
   margin-left:'-10%';
   height:'90%'
 }
+input[type='file']{
+    background-color:transparent;
+}
+input[type="file"]:before {
+  content: "Browse";
+  background: #fff;
+  width: 100%;
+  height: 35px;
+  display: block;
+  text-align: left;
+  position: relative;
+  margin: 0;
+  margin: 0 5px;
+  left: -6px;
+  border: 1px solid #e0e0e0;
+  top: -1px;
+  line-height: 35px;
+  color: #b6b6b6;
+  padding-left: 5px;
+  display: block;
+}
+p{
+  font-size: '1.2em';
+  margin-top:'10px';
+  color:'black'
+}

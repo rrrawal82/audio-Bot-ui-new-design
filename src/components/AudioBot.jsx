@@ -96,17 +96,14 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         this.setState({ uploading: true });
        
         try {
-            const config = {
-            onUploadProgress: progressEvent => {
-              const { loaded, total } = progressEvent;
-              const progress = Math.round((loaded * 100) / total);
-              this.setState({ uploadProgress: progress });
-            },
-          };
+            
             const res = await axios.post("http://localhost:5000/upload_document", formData, {
-            headers: {
-               'Content-Type': 'multipart/form-data'
-            }
+              onUploadProgress: (progressEvent) => {
+                const progress = Math.round(
+                  (progressEvent.loaded / progressEvent.total) * 100
+                );
+                this.setState({uploadProgress:progress});
+              },
             });
           //console.log('File uploaded successfully:', res.data);
            if(res.data)
@@ -135,6 +132,16 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
     backgroundRepeat: "no-repeat",
   };
     
+  const progressBarStyle = {
+    width: `${this.state.uploadProgress}%`,
+    height: "5px",
+    backgroundColor: "blue",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  };
+
+
   return (
     <div className="App container"style={backgroundStyle} >
       <div className='row' >
@@ -155,13 +162,15 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                  onDrop={this.handleDrop}
                  >
                     <Card.Body>
-                      <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px'}}/>
-                      <p style={{ fontSize: '1.2em',marginTop:'10px',color:'black'}}><b>Drag & Drop an image here </b>
+                      <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px',cursor: 'pointer' }}  onClick={() => this.fileInput.click()}/>
+                      <p ><b>Drag & Drop a file here </b>
                       </p><p style={{ fontSize: '1.0em',color:'black'}}><b>Or</b></p>
+                       <p> <b>Click on upload icon to upload files</b></p>
+                     
                       <input  type="file"  multiple
                         ref={fileInput => this.fileInput = fileInput}
                         onChange={this.handleAddFile}  
-                        style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%'}}
+                        style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
                       />
                        <p>(Only PDF , XLS , DOC and PPT files . )</p>
                        <br>
@@ -182,7 +191,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                             aria-valuemin="0"
                             aria-valuemax="100"
                           >
-                            {this.state.uploadProgress}%
+                           <div>Upload Progress: {this.state.uploadProgress}%</div>
                           </div>
                         </div>
                       )}
