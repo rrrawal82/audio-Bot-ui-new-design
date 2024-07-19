@@ -41,3 +41,32 @@ p{
   margin-top:'10px';
   color:'black'
 }
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+.textContainer{
+  position: relative;
+}
+.textContainer textarea {
+  display: block;
+  width: 80% !important;
+  resize: vertical;
+}
+
+
+.textContainer .open-button {
+  padding: 10px 20px;
+  position: absolute;
+  right: 10px;
+  background-color:'#ebebe0'; 
+  color: 'blue';
+  padding: '5px 5px';
+  border: 'none'; 
+  border-radius: '8px';
+  cursor: 'pointer';
+  width: '30px';
+  font-size:'10px';
+  float:'right'
+} */
