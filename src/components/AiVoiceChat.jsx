@@ -73,7 +73,8 @@ export default class AudioDemo extends Component {
         // Send base64 audio to the backend
         try {
           const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio });
-          const newVideoURL = `http://localhost:5000${response.data.output_video_url}`;
+          //const newVideoURL = `http://localhost:5000${response.data.output_video_url}`;
+          const newVideoURL = response.data.output_video_url;
           this.setState({ videoURL: newVideoURL, newVideo: true });
           this.setState({ output_video_url: response.data.output_video_url });
           this.setState({ question: response.data.transcript_text });
