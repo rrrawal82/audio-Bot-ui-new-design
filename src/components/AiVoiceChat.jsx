@@ -11,7 +11,7 @@ import record from '../images/record.png';
 import chat from '../images/chat.png';
 import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
-
+import { IoMdSend } from "react-icons/io";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -26,6 +26,7 @@ export default class AudioDemo extends Component {
       micDisable: false,
       videoURL: videoUrl,
       loading:false,
+      loadingChat:false,
       output_video_url:'',
       question:'',
       answer:'',
@@ -130,12 +131,15 @@ export default class AudioDemo extends Component {
   sendQuestion = async () => {
     try {
       const question = this.state.userInput;
+      this.setState({ loadingChat: true });
       if (question !== '') {
         const response = await axios.post("http://localhost:5000/ask_question", { question: question });
-        if (response.data) {
-          this.setState({ question: question });
-          this.setState({ answer: response.data.response });
-        }
+         if (response.data) {
+           this.setState({ question: question });
+           this.setState({ answer: response.data.response });
+          // this.setState({ answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." });
+           this.setState({ loadingChat: false });
+         }
       }
     } catch (err) {
       console.error(err);
@@ -167,23 +171,30 @@ export default class AudioDemo extends Component {
                 </video>
               </div>
               <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'293px',fontSize:'12px',backgroundColor:'#ebebe0',borderRadius:'2%', overflowY:'hidden'}}>
-                    {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right'}}>
-                    <span>{this.state.question}</span>
-                    </div>)}
-                    {this.state.answer && ( <div class= "chatRequestText" style={{backgroundColor:'#8cd98c',padding:'9px',borderRadius: '10px',marginTop:'20px',overflow:'hidden',float:'left'}}>
-                    <span> {this.state.answer}</span>
-                    </div>)}
-                  <div style={{position:'absolute',bottom:'0px'}}>
+                  <div style={{overflowY:'scroll',height:'293px',maxHeight:'230px',paddingBottom:'10%'}}>
+                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',width:'350px'}}>
+                        <span>{this.state.question}</span>
+                        </div>)}
+                        {this.state.answer && ( <div class= "chatRequestText" style={{backgroundColor:'#8cd98c',padding:'9px',borderRadius: '10px',marginTop:'20px',overflow:'hidden',float:'left',width:'350px'}}>
+                        <span> {this.state.answer}</span>
+                        </div>)}
+                        {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
+                              marginLeft: "45%",position:'absolute',top:'100px'
+                          }} role="status">
+                        </div>
+                        ) }
+                  </div>
+                  <div style={{position:'absolute',bottom:'0px',marginTop:'10px'}}>
                     <textarea
                     onChange={this.handleInputChange} 
                     value={this.state.userInput}
-                    style={{width:'415px',border:'0px',padding:'5px',fontSize:'12px',cologreyr:''}} placeholder='Type your message'/>
+                    style={{width:'415px',border:'0px',padding:'5px',fontSize:'12px',display:'block' ,bottom:'50px',marginBottom:'5px',borderRadius:'10px' }} placeholder='Type your message'/>
                     <Button className="open-button" id="myBtn" 
-                    style={{ backgroundColor:'#ebebe0', color: 'blue', padding: '5px 5px', border: 'none', 
-                    borderRadius: '8px', cursor: 'pointer', width: '40px',fontSize:'10px',float:'right' }} 
+                    style={{ backgroundColor:'white', color: 'blue', padding: '10px 10px', border: 'none', 
+                    borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'absolute' ,bottom:'5px',right:'3px'}} 
                     onClick={this.sendQuestion}
                     rows={4}
-                    >SEND</Button>
+                    ><IoMdSend size="20px" /></Button>
                   </div>
               </div>
              
