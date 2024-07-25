@@ -12,6 +12,7 @@ import chat from '../images/chat.png';
 import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
+import { FaUpload } from "react-icons/fa6";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -134,11 +135,11 @@ export default class AudioDemo extends Component {
       const question = this.state.userInput;
       this.setState({ loadingChat: true });
       if (question !== '') {
-        const response = await axios.post("http://localhost:5000/ask_question", { question: question });
+         const response = await axios.post("http://localhost:5000/ask_question", { question: question });
          if (response.data) {
            this.setState({ question: question });
            this.setState({ answer: response.data.response });
-          // this.setState({ answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." });
+           //this.setState({ answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." });
            this.setState({ loadingChat: false });
          }
       }
@@ -157,26 +158,23 @@ export default class AudioDemo extends Component {
   render() {
     return (
       <div className="App">
-        <Modal show='true' onHide={this.handleClose} style={{marginTop:'2%',width:'100% !important'}} size="lg">
-          <Modal.Header style={{ backgroundColor: 'black' }}>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-          </Modal.Header>
-          <Modal.Body style={{ backgroundColor: 'black', width: '100%',height:'350px' }}>
+        <Modal show='true' onHide={this.handleClose} style={{marginTop:'2%',width:'100% !important' }} size="lg">
+        
+          <Modal.Body style={{ width: '100%',height:'420px' }}>
          
             <div class="d-flex flex-row bd-highlight mb-3">
               <div class="p-2 bd-highlight">
-                <video width="520" height="380" style={{marginTop:'-10%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
+                <video width="600" height="380" style={{marginTop:'-1%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
               </div>
-              <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'293px',fontSize:'12px',backgroundColor:'#ebebe0',borderRadius:'2%', overflowY:'hidden'}}>
-                  <div style={{overflowY:'scroll',height:'293px',maxHeight:'230px',paddingBottom:'10%'}}>
-                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',width:'350px'}}>
+              <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'342px',marginTop:'22px',fontSize:'12px',backgroundColor:'#ebebe0',borderRadius:'2%', overflowY:'hidden'}}>
+                  <div style={{overflowY:'scroll',height:'280px',maxHeight:'285px',paddingBottom:'10%'}}>
+                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',width:'280px',marginRight:'5px'}}>
                         <span>{this.state.question}</span>
                         </div>)}
-                        {this.state.answer && ( <div class= "chatRequestText" style={{backgroundColor:'#8cd98c',padding:'9px',borderRadius: '10px',marginTop:'20px',overflow:'hidden',float:'left',width:'350px'}}>
+                        {this.state.answer && ( <div class= "chatRequestText" 
+                        style={{backgroundColor:'#8cd98c',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',width:'280px'}}>
                         <span> {this.state.answer}</span>
                         </div>)}
                         {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
@@ -189,7 +187,7 @@ export default class AudioDemo extends Component {
                     <textarea
                     onChange={this.handleInputChange} 
                     value={this.state.userInput}
-                    style={{width:'415px',border:'0px',padding:'5px',fontSize:'12px',display:'block' ,bottom:'50px',marginBottom:'5px',borderRadius:'10px' }} placeholder='Type your message'/>
+                    style={{width:'335px',border:'0px',padding:'5px',fontSize:'12px',display:'block' ,bottom:'50px',marginBottom:'5px',borderRadius:'10px' }} placeholder='Type your message'/>
                     <Button className="open-button" id="myBtn" 
                     style={{ backgroundColor:'white', color: 'blue', padding: '10px 10px', border: 'none', 
                     borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'absolute' ,bottom:'5px',right:'3px'}} 
@@ -207,7 +205,11 @@ export default class AudioDemo extends Component {
             </div>
             ) }
           </Modal.Body>
-          <Modal.Footer style={{ backgroundColor: 'black' }}>
+          <Modal.Footer style={{  }}>
+             <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
+                <FaUpload size="45px" />
+             </Button>
+           
             {this.state.isRecording ? (
               <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
                 <img src={record} height="45" alt="record" />

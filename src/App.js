@@ -5,7 +5,7 @@ import BackgroundImage from './images/background.jpg';
 import './index.css';
 const Layout =()=>{
   const backgroundStyle = {
-    backgroundImage:`url(${BackgroundImage})`,
+    backgroundImage: 'linear-gradient(to bottom right,black , blue)',
     height: "96vh",
     marginTop: "2%",
     //fontSize: "50px",
