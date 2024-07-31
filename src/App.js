@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider } from 'react-router-dom';
-import {Navbar ,AudioBot,AudioDemo, Main,AiVoiceChat} from './components';
+import {Navbar ,AudioBot,AudioDemo, Main,AiVoiceChat,Login} from './components';
 import BackgroundImage from './images/background.jpg';
 import './index.css';
 const Layout =()=>{
@@ -28,12 +28,16 @@ const router = createBrowserRouter([
     children:[
       {
         path:"/",
-        element:<AudioBot/>
+        element:<Login/>
       },
       {
         path:"/chatbot",
         element:<AiVoiceChat/>
       },
+      {
+        path:"/audioBot",
+        element:<AudioBot/>
+      }
     ]
   }
   

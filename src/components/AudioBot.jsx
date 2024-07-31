@@ -44,21 +44,19 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
    
    }
 
-   componentDidMount(){
-   // console.log(this.state.newVideo)
+    componentDidMount(){
+    // console.log(this.state.newVideo)
+      
+    } 
+        
+    handleClose() {
+      this.setState({ show: false });
+    }
+    handleShow() {
+      this.setState({ show: true });
+    }
     
-   } 
-  
-   
-      handleClose() {
-        this.setState({ show: false });
-      }
-      handleShow() {
-        this.setState({ show: true });
-      }
-    
-
-     handleDragEnter = (e) => {
+    handleDragEnter = (e) => {
       e.preventDefault();
       this.setState({ dragOver: true });
     };
@@ -107,7 +105,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
           // console.log('File uploaded successfully:', res.data);
           if(res.data)
           {
-            this.props.navigate('/chatbot');
+             this.props.navigate('/chatbot');
           }
         } catch (err) {
           console.error('Error uploading file:', err);
@@ -148,72 +146,72 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
           
         </div>  
         <div className='col-sm'> 
-        <div >
-        <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
-            <Card.Body>
-              <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
-              <Card.Text style={{top: '13px'}}>
-                 <Card 
-                 style={{position:'absolute', top: '80px', left: '10%',width:'80%', height:'70vh', border:'dotted 2px grey'  }}
-                 onDragOver={this.handleDragOver}
-                 onDragEnter={this.handleDragEnter}
-                 onDragLeave={this.handleDragLeave}
-                 onDrop={this.handleDrop}
-                 >
-                    <Card.Body>
-                      <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px',cursor: 'pointer' }}  onClick={() => this.fileInput.click()}/>
-                      <p ><b>Drag & Drop a file here </b>
-                      </p><p style={{ fontSize: '1.0em',color:'black'}}><b>Or</b></p>
-                       <p> <b>Click on upload icon to upload files</b></p>
-                     
-                      <input  type="file"  multiple
-                        ref={fileInput => this.fileInput = fileInput}
-                        onChange={this.handleAddFile}  
-                        style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
-                      />
-                       <p>(Only PDF , XLS , DOC and PPT files . )</p>
-                       <br>
-                       </br>
-                       
-                       <Button  class="open-button" id="myBtn"  
-                      style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-7%',zIndex:'10000',marginBottom:'5%'}}
-                      onClick={() => this.uploadFiles(this.state.files)}       
-                      >Save Files</Button>
-                       <br></br>
-                     {this.state.uploading && (
-                        <div className="progress" style={{ marginTop: '-10px' }}>
-                          <div
-                            className="progress-bar"
-                            role="progressbar"
-                            style={{ width: `${this.state.uploadProgress}%` }}
-                            aria-valuenow={this.state.uploadProgress}
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          >
-                           <div>Upload Progress: {this.state.uploadProgress}%</div>
-                          </div>
-                        </div>
-                      )}
-                     
-                      {this.state.files.length > 0 && (
-                        <div style={{ marginTop: '3px',overflowY:'scroll',maxHeight:'100px' }}>
-                         
-                          <ul>
-                            {this.state.files.map((file, index) => (
-                              <li key={index}>{file.name} - {file.size} bytes</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                     
-                    </Card.Body>
-                   </Card>
-              </Card.Text>
-            </Card.Body>
-           
-            </Card>
-            </div>
-        </div>
+          <div >
+            <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
+                <Card.Body>
+                  <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
+                  <Card.Text style={{top: '13px'}}>
+                    <Card 
+                    style={{position:'absolute', top: '80px', left: '10%',width:'80%', height:'70vh', border:'dotted 2px grey'  }}
+                    onDragOver={this.handleDragOver}
+                    onDragEnter={this.handleDragEnter}
+                    onDragLeave={this.handleDragLeave}
+                    onDrop={this.handleDrop}
+                    >
+                        <Card.Body>
+                          <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px',cursor: 'pointer' }}  onClick={() => this.fileInput.click()}/>
+                          <p ><b>Drag & Drop a file here </b>
+                          </p><p style={{ fontSize: '1.0em',color:'black'}}><b>Or</b></p>
+                          <p> <b>Click on upload icon to upload files</b></p>
+                        
+                          <input  type="file"  multiple
+                            ref={fileInput => this.fileInput = fileInput}
+                            onChange={this.handleAddFile}  
+                            style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
+                          />
+                          <p>(Only PDF , XLS , DOC and PPT files . )</p>
+                          <br>
+                          </br>
+                          
+                          <Button  class="open-button" id="myBtn"  
+                          style= {{color:'white', backgroundColor:'#204E7E',border: 'none', borderRadius:'50px',cursor:'pointer',width:'150px', height:'45px',marginLeft:'6%',marginTop:'-7%',zIndex:'10000',marginBottom:'5%'}}
+                          onClick={() => this.uploadFiles(this.state.files)}       
+                          >Save Files</Button>
+                          <br></br>
+                        {this.state.uploading && (
+                            <div className="progress" style={{ marginTop: '-10px' }}>
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                style={{ width: `${this.state.uploadProgress}%` }}
+                                aria-valuenow={this.state.uploadProgress}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                              <div>Upload Progress: {this.state.uploadProgress}%</div>
+                              </div>
+                            </div>
+                          )}
+                        
+                          {this.state.files.length > 0 && (
+                            <div style={{ marginTop: '3px',overflowY:'scroll',maxHeight:'100px' }}>
+                            
+                              <ul>
+                                {this.state.files.map((file, index) => (
+                                  <li key={index}>{file.name} - {file.size} bytes</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        
+                        </Card.Body>
+                      </Card>
+                  </Card.Text>
+                </Card.Body>
+              
+                </Card>
+              </div>
+          </div>
        </div>       
     </div>
   );

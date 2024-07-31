@@ -136,10 +136,10 @@ export default class AudioDemo extends Component {
       this.setState({ loadingChat: true });
       if (question !== '') {
          const response = await axios.post("http://localhost:5000/ask_question", { question: question });
-         if (response.data) {
+        if (response.data) {
            this.setState({ question: question });
            this.setState({ answer: response.data.response });
-           //this.setState({ answer: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." });
+           //this.setState({ answer: "I  am good .How are you?" });
            this.setState({ loadingChat: false });
          }
       }
@@ -206,10 +206,11 @@ export default class AudioDemo extends Component {
             ) }
           </Modal.Body>
           <Modal.Footer style={{  }}>
+            {/* <span style={{float:'left'}}> [Note : Upload files to start interacting using AI]</span>
              <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
-                <FaUpload size="45px" />
+                <FaUpload size="42px" />
              </Button>
-           
+            */}
             {this.state.isRecording ? (
               <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
                 <img src={record} height="45" alt="record" />
