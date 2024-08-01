@@ -21,13 +21,19 @@ const Login = () => {
         backgroundRepeat: "no-repeat",
     };
 
-
+     
     const navigate=useNavigate()
     const handleLogin=async e =>{
         e.preventDefault();
         try{
-            const res = await axios.post("/auth/login", inputs)
-            navigate("/audioBot")
+            console.log(inputs)
+            if(inputs.username!='' && inputs.password!=''){
+                const res = await axios.post("/auth/login", inputs)
+                navigate("/audioBot")
+            }
+            else{
+                setError("Enter login and password!")     
+            }
           }catch(err){
             setError(err.response.data)
           }
@@ -63,7 +69,14 @@ const Login = () => {
                             <Button variant="primary" onClick={handleLogin} style={{float:'left'}}>Log In</Button>
                         </div>
                         <br></br>
-                        <p  ><Link to="/" style={{float:'left' ,marginTop:'30px',marginLeft:'-70px'}}>Forgot password?</Link></p>
+                        <p style={{float:'left' ,marginTop:'30px',marginLeft:'-70px'}}>
+                            Don't you have an account?
+                            <Link to="/register"  > Register</Link>
+                          
+                        </p><br></br>
+                        <p style={{float:'left' ,marginTop:'30px',marginLeft:'-257',color:'red'}}>
+                            {err&& <p>{err}</p>}
+                        </p>
                     </Card.Body>
                 </Card>
             </div>  
