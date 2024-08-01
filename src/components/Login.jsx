@@ -5,12 +5,11 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import BackgroundImage from '../images/background.jpg';
 import Logo from '../images/logo.png';
-import {link,useNavigate} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import axios from "axios"
 const Login = () => {
     const [inputs,setInputs]= useState({
-        username:"",
-         email:"",
+         username:"",
          password:""
       })
     const[err,setError]=useState(null)
@@ -27,7 +26,7 @@ const Login = () => {
     const handleLogin=async e =>{
         e.preventDefault();
         try{
-           // const res = await axios.post("/auth/login", inputs)
+            const res = await axios.post("/auth/login", inputs)
             navigate("/audioBot")
           }catch(err){
             setError(err.response.data)
@@ -54,13 +53,17 @@ const Login = () => {
                                     label="Email address"
                                     className="mb-3"
                             >
-                                    <Form.Control type="email" placeholder="name@example.com" onChange={handleChange} />
+                                    <Form.Control type="email" placeholder="name@example.com" name="username" onChange={handleChange} />
                             </FloatingLabel>
                             <FloatingLabel controlId="floatingPassword" label="Password">
-                                <Form.Control type="password" placeholder="Password" onChange={handleChange} />
+                                <Form.Control type="password" placeholder="Password" name="password"  onChange={handleChange} />
                             </FloatingLabel>
                         </Card.Text>
-                        <Button variant="primary" onClick={handleLogin}>Login</Button>
+                        <div>
+                            <Button variant="primary" onClick={handleLogin} style={{float:'left'}}>Log In</Button>
+                        </div>
+                        <br></br>
+                        <p  ><Link to="/" style={{float:'left' ,marginTop:'30px',marginLeft:'-70px'}}>Forgot password?</Link></p>
                     </Card.Body>
                 </Card>
             </div>  
