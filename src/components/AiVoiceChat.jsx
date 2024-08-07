@@ -157,10 +157,35 @@ export default class AudioDemo extends Component {
   };
   handleAddFile=(e)=>{
     this.state.files=[]
-    const files = e.target.files;
-    this.setState({ files: [...this.state.files, ...files] });
-    console.log(this.state.files)
+    const files = Array.from(e.target.files);
+    this.setState({ files }, () => {
+      // Trigger file upload after file selection
+      this.uploadFiles();
+    });
   };
+    uploadFiles = async () => {
+      const { files } = this.state;
+      if (files.length === 0) return;
+  
+      this.setState({ loading: true });
+  
+      const formData = new FormData();
+      files.forEach(file => formData.append('files', file));
+      
+  
+      try {
+        const response = await axios.post('http://localhost:5000/upload_files', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        console.log('Files uploaded successfully:', response.data);
+      } catch (error) {
+        console.error('Error uploading files:', error);
+      } finally {
+        this.setState({ loading: false });
+      }
+    };
+  
+  
   render() {
     return (
       <div className="App">
