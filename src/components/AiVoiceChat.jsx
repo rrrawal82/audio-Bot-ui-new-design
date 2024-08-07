@@ -10,7 +10,7 @@ import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
-import { FaFolderPlus } from "react-icons/fa6";
+import { SiFiles } from "react-icons/si";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -223,7 +223,7 @@ export default class AudioDemo extends Component {
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer',marginRight:'70px', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
                   rows={4} onClick={() => this.fileInput.click()}
-                  ><FaFolderPlus  size="21px"/></Button>
+                  ><SiFiles  size="21px"/></Button>
                   <Button className="sendChatBtn" id="myBtn" 
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
