@@ -28,8 +28,8 @@ const Login = () => {
         try{
             console.log(inputs)
             if(inputs.username!='' && inputs.password!=''){
-                const res = await axios.post("/auth/login", inputs)
-                navigate("/chatbot")
+                //const res = await axios.post("/auth/login", inputs)
+                navigate("/")
             }
             else{
                 setError("Enter login and password!")     
