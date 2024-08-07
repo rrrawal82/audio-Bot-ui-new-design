@@ -64,6 +64,24 @@ div.scroller {
   overflow-y: scroll;
   scrollbar-color: pink lightblue;
 } 
+.navbar-custom {
+  height: 75px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 0 15px;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar-content a {
+  color: white;
+  margin-right: 15px;
+}
 /* * {
   margin: 0;
   padding: 0;

@@ -1,22 +1,29 @@
 import React from 'react'
-
+import '../index.css';
+import {Link} from 'react-router-dom'
 const Navbar = () => {
   return (
     <div>
-        <nav class="navbar  border-bottom border-body"style={{marginLeft:'-45px',height:'75px',width:'112%',backgroundColor:'black',color:'white'}} data-bs-theme="dark">
-            <div class="container">
-               
-                <form class="d-flex float-end" role="search" >
-                {/* <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Search</button> */}
-                    <a >Login</a>
-                    <span>
-                    Ritu Rawal</span>
-                </form>
-            </div>
-        </nav>
+      <nav
+        className="navbar border-bottom border-body"
+        style={{
+          height: '75px',
+          width: '100%',
+          backgroundColor: 'black',
+          color: 'white',
+          padding: '0 15px'
+        }}
+        data-bs-theme="dark"
+      >
+        <div className="container">
+          <form className="d-flex justify-content-end align-items-center float-end" role="search">
+            <Link to="/login"> Login</Link>
+            <span className="text-white"></span>
+          </form>
+        </div>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

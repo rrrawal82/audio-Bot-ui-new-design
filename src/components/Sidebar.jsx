@@ -14,11 +14,13 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
+      <CDBSidebar textColor="#fff" backgroundColor="#333" toggled >
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+        <div className="container" style={{ display: 'flex', alignItems: 'center' }}>
+         
                 <img src={logo} alt="" style={{width:"150px"}}/>
-          </a>
+         
+          </div>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">

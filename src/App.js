@@ -29,31 +29,28 @@ const Layout =()=>{
 
   );
 }
-
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
-    children:[
+    element: <Layout />,
+    children: [
       {
-        path:"/",
-        element:<AiVoiceChat/>
+        index: true, // Equivalent to path: "/"
+        element: <AiVoiceChat />,
       },
       {
-        path:"/chatbot",
-        element:<AiVoiceChat/>
+        path: "audioBot",
+        element: <AudioBot />,
       },
-      {
-        path:"/audioBot",
-        element:<AudioBot/>
-      }
-    ]
-  }
-  
-])
+    ],
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+]);
 
-  function App() {
+function App() {
     return (
       <div className="app">
          <div className="">

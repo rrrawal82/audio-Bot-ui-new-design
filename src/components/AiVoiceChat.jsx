@@ -6,13 +6,9 @@ import axios from 'axios';
 import logo from '../images/quickparts_logo.JPG';
 import pbi from '../images/pbi.jpg';
 import MaskGroup from '../images/MaskGroup.png';
-import mic from '../images/mic.png';
-import record from '../images/record.png';
-import chat from '../images/chat.png';
 import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
-import { FaUpload } from "react-icons/fa6";
 import { FaMicrophone } from "react-icons/fa";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -167,20 +163,18 @@ export default class AudioDemo extends Component {
                 </video>
               </div>
               <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'380px',marginTop:'3%',fontSize:'14px',backgroundColor:'rgb(51, 51, 51)', overflowY:'hidden',maxHeight:'337px',paddingBottom:'10%',textAlign:'left'}}>
-                  
-                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',marginRight:'5px'}}>
-                        <span>{this.state.question}</span>
-                        </div>)}
-                        {this.state.answer && ( <div class= "chatRequestText" 
-                        style={{backgroundColor:'rgb(51, 51, 51)',color:'white',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',maxWidth:'380px'}}>
-                        <span> {this.state.answer}</span>
-                        </div>)}
-                        {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
-                              marginLeft: "45%",position:'absolute',top:'100px'
-                          }} role="status">
-                        </div>
-                        ) }
-                 
+                    {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',marginRight:'5px'}}>
+                    <span>{this.state.question}</span>
+                    </div>)}
+                    {this.state.answer && ( <div class= "chatRequestText" 
+                    style={{backgroundColor:'rgb(51, 51, 51)',color:'white',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',maxWidth:'380px'}}>
+                    <span> {this.state.answer}</span>
+                    </div>)}
+                    {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
+                          marginLeft: "45%",position:'absolute',top:'100px'
+                      }} role="status">
+                    </div>
+                    ) }
               </div>
            </div>
             
