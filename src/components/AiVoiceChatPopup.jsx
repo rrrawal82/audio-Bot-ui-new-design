@@ -13,8 +13,6 @@ import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaUpload } from "react-icons/fa6";
-import { FaMicrophone } from "react-icons/fa";
-
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -160,19 +158,23 @@ export default class AudioDemo extends Component {
   render() {
     return (
       <div className="App">
-          <div class="d-flex flex-row bd-highlight mb-3">
+        <Modal show='true' onHide={this.handleClose} style={{marginTop:'2%',width:'100% !important' }} size="lg">
+        
+          <Modal.Body style={{ width: '100%',height:'420px' }}>
+         
+            <div class="d-flex flex-row bd-highlight mb-3">
               <div class="p-2 bd-highlight">
-                <video width="600" height="400" style={{marginTop:'-1%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
+                <video width="600" height="380" style={{marginTop:'-1%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
               </div>
-              <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'380px',marginTop:'3%',fontSize:'14px',backgroundColor:'rgb(51, 51, 51)', overflowY:'hidden',maxHeight:'337px',paddingBottom:'10%',textAlign:'left'}}>
-                  
-                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',marginRight:'5px'}}>
+              <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'342px',marginTop:'22px',fontSize:'12px',backgroundColor:'#ebebe0',borderRadius:'2%', overflowY:'hidden'}}>
+                  <div style={{overflowY:'scroll',height:'280px',maxHeight:'285px',paddingBottom:'10%'}}>
+                        {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',width:'280px',marginRight:'5px'}}>
                         <span>{this.state.question}</span>
                         </div>)}
                         {this.state.answer && ( <div class= "chatRequestText" 
-                        style={{backgroundColor:'rgb(51, 51, 51)',color:'white',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',maxWidth:'380px'}}>
+                        style={{backgroundColor:'#8cd98c',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',width:'280px'}}>
                         <span> {this.state.answer}</span>
                         </div>)}
                         {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
@@ -180,50 +182,50 @@ export default class AudioDemo extends Component {
                           }} role="status">
                         </div>
                         ) }
-                 
+                  </div>
+                  <div style={{position:'absolute',bottom:'0px',marginTop:'10px'}}>
+                    <textarea
+                    onChange={this.handleInputChange} 
+                    value={this.state.userInput}
+                    style={{width:'335px',border:'0px',padding:'5px',fontSize:'12px',display:'block' ,bottom:'50px',marginBottom:'5px',borderRadius:'10px' }} placeholder='Type your message'/>
+                    <Button className="open-button" id="myBtn" 
+                    style={{ backgroundColor:'white', color: 'blue', padding: '10px 10px', border: 'none', 
+                    borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'absolute' ,bottom:'5px',right:'3px'}} 
+                    onClick={this.sendQuestion}
+                    rows={4}
+                    ><IoMdSend size="20px" /></Button>
+                  </div>
               </div>
-           </div>
+             
+            </div>
             
             {this.state.loading && (  <div class="spinner-border spinner-border-md text-primary" style={{
                    marginLeft: "50%",
                }} role="status">
             </div>
             ) }
-         
+          </Modal.Body>
+          <Modal.Footer style={{  }}>
             {/* <span style={{float:'left'}}> [Note : Upload files to start interacting using AI]</span>
              <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
                 <FaUpload size="42px" />
              </Button>
             */}
-            
-            <div style={{position:'absolute',bottom:'0px',marginTop:'10px'}}>
-                  <textarea
-                  onChange={this.handleInputChange} 
-                  value={this.state.userInput}
-                  style={{width:'82vw',background: 'rgb(51, 51, 51)',color:'white',border:'0px',marginLeft:'5px',padding:'7px',fontSize:'14px',display:'block' ,bottom:'50px',marginBottom:'50px',borderRadius:'10px' }} placeholder='Type your message'/>
-                  {this.state.isRecording ? (
-                  <Button className="open-button"  onClick={this.stop}  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-98px', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}}  disabled={this.state.micDisable}>
-                  <FaMicrophone size="18px" color='blue'/>
-                  </Button>
-                  ) : (
-                  <Button className="open-button" onClick={this.start}  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-98px', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}}  disabled={this.state.isRecording}>
-                 <FaMicrophone size="18px"/>
-                  </Button>
-                  )}
-                  <Button className="sendChatBtn" id="myBtn" 
-                  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
-                  onClick={this.sendQuestion}
-                  rows={4}
-                  ><IoMdSend size="23px" /></Button>
-            </div>
+            {this.state.isRecording ? (
+              <Button variant="secondary" onClick={this.stop} disabled={this.state.micDisable}>
+                <img src={record} height="45" alt="record" />
+              </Button>
+            ) : (
+              <Button variant="secondary" onClick={this.start} disabled={this.state.isRecording}>
+                <img src={mic} height="45" alt="mic" />
+              </Button>
+            )}
            {/*<Button variant="primary">
               <img src={chat} height="45" alt="chat" />
           </Button>*/}
             {/* <audio src={this.state.blobURL} controls="controls" /> */}
-         
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }

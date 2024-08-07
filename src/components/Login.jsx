@@ -29,7 +29,7 @@ const Login = () => {
             console.log(inputs)
             if(inputs.username!='' && inputs.password!=''){
                 const res = await axios.post("/auth/login", inputs)
-                navigate("/audioBot")
+                navigate("/chatbot")
             }
             else{
                 setError("Enter login and password!")     
@@ -45,8 +45,7 @@ const Login = () => {
     <div className="App container"style={backgroundStyle}>
         <div className='row' >
             <div className='col-sm'  >
-            
-            </div>  
+             </div>  
             <div className='col-sm'> 
                 <Card style={{height:'94vh' ,width:'93%',marginTop:'1%',marginLeft:'8%',borderRadius:'5px'}}>
                     <Card.Img variant="top" src={Logo}   style={{ width: '10rem',marginTop:'100px',marginLeft:'20px'}}/>
@@ -71,10 +70,9 @@ const Login = () => {
                         <br></br>
                         <p style={{float:'left' ,marginTop:'30px',marginLeft:'-70px'}}>
                             Don't you have an account?
-                            <Link to="/register"  > Register</Link>
-                          
+                            <Link to="/register"> Register</Link>
                         </p><br></br>
-                        <p style={{float:'left' ,marginTop:'30px',marginLeft:'-257',color:'red'}}>
+                        <p style={{float:'left' ,marginTop:'30px',marginLeft:'-257px',color:'red'}}>
                             {err&& <p>{err}</p>}
                         </p>
                     </Card.Body>

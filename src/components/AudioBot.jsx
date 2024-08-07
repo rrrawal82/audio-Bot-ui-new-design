@@ -93,25 +93,25 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
       if (this.state.files.length !== 0) {
         this.setState({ uploading: true });
        
-        try {
-          const res = await axios.post("http://localhost:5000/upload_document", formData, {
-            onUploadProgress: (progressEvent) => {
-              const progress = Math.round(
-                (progressEvent.loaded / progressEvent.total) * 100
-              );
-              this.setState({uploadProgress:progress});
-            },
-          });
+        // try {
+        //   const res = await axios.post("http://localhost:5000/upload_document", formData, {
+        //     onUploadProgress: (progressEvent) => {
+        //       const progress = Math.round(
+        //         (progressEvent.loaded / progressEvent.total) * 100
+        //       );
+        //       this.setState({uploadProgress:progress});
+        //     },
+        //   });
           // console.log('File uploaded successfully:', res.data);
-          if(res.data)
-          {
+          // if(res.data)
+          // {
              this.props.navigate('/chatbot');
-          }
-        } catch (err) {
-          console.error('Error uploading file:', err);
-        } finally {
-          this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
-        }
+         // }
+        // } catch (err) {
+        //   console.error('Error uploading file:', err);
+        // } finally {
+        //   this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
+        // }
        
       } else {
         alert('Select at least one file to upload.');
@@ -147,7 +147,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
         </div>  
         <div className='col-sm'> 
           <div >
-            <Card style={{height:'90vh' ,width:'90%',marginTop:'4%',marginLeft:'8%',borderRadius:'5px'}} >
+            <Card style={{height:'94vh' ,width:'93%',marginTop:'1%',marginLeft:'8%',borderRadius:'5px'}} >
                 <Card.Body>
                   <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
                   <Card.Text style={{top: '13px'}}>
@@ -158,7 +158,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
                     onDragLeave={this.handleDragLeave}
                     onDrop={this.handleDrop}
                     >
-                        <Card.Body>
+                        <Card.Body style={{textAlign:'center'}}>
                           <img src={uploadImg} width="30%" color="#3385ff"  style={{top: '80px',cursor: 'pointer' }}  onClick={() => this.fileInput.click()}/>
                           <p ><b>Drag & Drop a file here </b>
                           </p><p style={{ fontSize: '1.0em',color:'black'}}><b>Or</b></p>

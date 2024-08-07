@@ -1,20 +1,30 @@
 import React from 'react';
+import {Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider } from 'react-router-dom';
-import {Navbar ,AudioBot,AudioDemo, Main,AiVoiceChat,Login} from './components';
+import {AudioBot,AudioDemo, Main,AiVoiceChat,Login, Sidebar,Navbar} from './components';
 import BackgroundImage from './images/background.jpg';
+
 import './index.css';
 const Layout =()=>{
   const backgroundStyle = {
-    backgroundImage: 'linear-gradient(to bottom right,black , blue)',
-    height: "96vh",
-    marginTop: "2%",
+    backgroundColor: 'black',
+    height: "100vh",
     //fontSize: "50px",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    width:'99%'
   };
   return (
-     <div  style={backgroundStyle}>
-        <Outlet/>
+     <div style={backgroundStyle}>
+       <Row>
+          <Col xs={1} id="sidebar-wrapper">      
+              <Sidebar/>
+          </Col>
+          <Col  xs={10} id="page-content-wrapper">
+            <Navbar/>
+            <Outlet/>
+          </Col>
+        </Row>
      </div> 
 
   );
@@ -28,7 +38,7 @@ const router = createBrowserRouter([
     children:[
       {
         path:"/",
-        element:<Login/>
+        element:<AiVoiceChat/>
       },
       {
         path:"/chatbot",
@@ -46,7 +56,7 @@ const router = createBrowserRouter([
   function App() {
     return (
       <div className="app">
-         <div className="container">
+         <div className="">
             <RouterProvider router={router}/>
          </div>
       </div>
