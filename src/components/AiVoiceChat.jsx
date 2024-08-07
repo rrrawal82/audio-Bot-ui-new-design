@@ -10,6 +10,7 @@ import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
+import { FaFolderPlus } from "react-icons/fa6";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -29,7 +30,8 @@ export default class AudioDemo extends Component {
       output_video_url:'',
       question:'',
       answer:'',
-      userInput: ''
+      userInput: '',
+      files: []
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -153,6 +155,12 @@ export default class AudioDemo extends Component {
   handleInputChange = (e) => {
     this.setState({ userInput: e.target.value });
   };
+  handleAddFile=(e)=>{
+    this.state.files=[]
+    const files = e.target.files;
+    this.setState({ files: [...this.state.files, ...files] });
+    console.log(this.state.files)
+  };
   render() {
     return (
       <div className="App">
@@ -162,6 +170,11 @@ export default class AudioDemo extends Component {
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
               </div>
+              <input  type="file"  multiple
+                            ref={fileInput => this.fileInput = fileInput}
+                            onChange={this.handleAddFile}  
+                            style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
+                          />
               <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'380px',marginTop:'3%',fontSize:'14px',backgroundColor:'rgb(51, 51, 51)', overflowY:'hidden',maxHeight:'337px',paddingBottom:'10%',textAlign:'left'}}>
                     {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',marginRight:'5px'}}>
                     <span>{this.state.question}</span>
@@ -208,10 +221,15 @@ export default class AudioDemo extends Component {
                   )}
                   <Button className="sendChatBtn" id="myBtn" 
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
+                  borderRadius: '8px', cursor: 'pointer',marginRight:'70px', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
+                  rows={4} onClick={() => this.fileInput.click()}
+                  ><FaFolderPlus  size="21px"/></Button>
+                  <Button className="sendChatBtn" id="myBtn" 
+                  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
                   onClick={this.sendQuestion}
                   rows={4}
-                  ><IoMdSend size="23px" /></Button>
+                  ><IoMdSend size="23px"/></Button>
             </div>
            {/*<Button variant="primary">
               <img src={chat} height="45" alt="chat" />

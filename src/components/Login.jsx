@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import BackgroundImage from '../images/background.jpg';
 import Logo from '../images/logo.png';
 import {Link,useNavigate} from 'react-router-dom';
+import { AuthContext } from '../context/authContext'
 import axios from "axios"
 const Login = () => {
     const [inputs,setInputs]= useState({

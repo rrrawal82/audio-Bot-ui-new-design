@@ -121,8 +121,7 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
  render()
  {
   const backgroundStyle = {
-    backgroundImage:`url(${BackgroundImage})`,
-    height: "96vh",
+    height: "93vh",
     marginTop: "2%",
     //fontSize: "50px",
     backgroundSize: "cover",
@@ -142,12 +141,10 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
   return (
     <div className="App container"style={backgroundStyle} >
       <div className='row' >
-        <div className='col-sm'  >
-          
-        </div>  
+      
         <div className='col-sm'> 
           <div >
-            <Card style={{height:'94vh' ,width:'93%',marginTop:'1%',marginLeft:'8%',borderRadius:'5px'}} >
+            <Card style={{height:'80vh' ,width:'93%',marginTop:'1%',marginLeft:'8%',borderRadius:'5px'}} >
                 <Card.Body>
                   <Card.Title style={{color:'#204E7E',marginTop:'10px',fontSize: '1.875em'}} >Upload Files</Card.Title>
                   <Card.Text style={{top: '13px'}}>
