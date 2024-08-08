@@ -1,9 +1,9 @@
-import React from 'react';
+import React , {useContext, useState} from 'react'
+import {Link} from 'react-router-dom'
+import { AuthContext } from '../context/authContext'
 import '../index.css';
-import { Link } from 'react-router-dom';
-
 const Navbar = () => {
-  const userName = ""; 
+  const {currentUser}=useContext(AuthContext)
   return (
     <div>
       <nav
@@ -19,8 +19,8 @@ const Navbar = () => {
       >
         <div className="container d-flex justify-content-end align-items-center">
           <form className="d-flex align-items-center" role="search">
-              {userName ?(
-              <span><span className="text-white me-3">{userName}</span>
+              {currentUser ?(
+              <span><span className="text-white me-3">{currentUser?.username}</span>
 
               <span className="text-white me-3"><Link to="/login" className="text-white text-decoration-none">
                     Logout
