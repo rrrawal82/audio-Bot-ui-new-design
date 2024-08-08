@@ -9,6 +9,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
 import { AiFillFileAdd } from "react-icons/ai";
+import Animation from '../images/Animation.gif';
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -204,11 +205,11 @@ export default class AudioDemo extends Component {
                     (<div className="message user-question" >
                     <span>{this.state.question}</span>
                     </div>)}
-                    {this.state.answer && ( <div class= "chatRequestText" 
+                    {this.state.answer && ( <span><div class= "chatRequestText" 
                     className="message bot-answer"
                     >
                     <span> {this.state.answer}</span>
-                    </div>)}
+                    </div></span>)}
                     {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
                           marginLeft: "45%",position:'absolute',top:'100px'
                       }} role="status">

@@ -85,11 +85,11 @@
 }
 
 .chat-window .bot-answer {
-  background-color: #5c3a3ad0; /* Same as message background */
+  background-color: #070400d0; /* Same as message background */
   color: #f0f0f0;
   float: left;
   margin-left: 10px;
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 .chat-window .loading-spinner {

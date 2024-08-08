@@ -33,9 +33,9 @@ const Login = () => {
             if(inputs.username!='' && inputs.password!=''){
                 //const res = await axios.post("/auth/login", inputs)
                 const res =await login(inputs)
-                if(res.status=="200")
+                if(res.username!="")
                 {
-                    navigate("/")
+                  navigate("/")
                 }else if(res.status=="404")
                 {
                   setError("Something is wrrong!Check your connection.")
