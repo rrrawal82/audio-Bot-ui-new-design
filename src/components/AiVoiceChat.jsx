@@ -3,10 +3,9 @@ import '../App.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import logo from '../images/quickparts_logo.JPG';
-import pbi from '../images/pbi.jpg';
 import MaskGroup from '../images/MaskGroup.png';
 import videoUrl from '../images/chat_video.mp4';
+import spinner from '../images/diagram.gif';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
@@ -25,7 +24,7 @@ export default class AudioDemo extends Component {
       micDisable: false,
       videoURL: videoUrl,
       loading:false,
-      loadingChat:false,
+      loadingChat:true,
       output_video_url:'',
       question:'',
       answer:'',
@@ -211,11 +210,9 @@ export default class AudioDemo extends Component {
                     >
                     <span> {this.state.answer}</span>
                     </div>)}
-                    {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
-                          marginLeft: "45%",position:'absolute',top:'100px'
-                      }} role="status">
-                    </div>
-                    ) }
+                    {this.state.loadingChat && ( <img src={spinner} size="20" style={{
+                          marginLeft: "45%",position:'absolute',top:'100px',width:'20%',backgroundColor:'red'}} role="spinner"/>
+                    )}
               </div>
            </div>
             

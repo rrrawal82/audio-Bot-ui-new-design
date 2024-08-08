@@ -4,12 +4,9 @@ import '../App.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import logo from '../images/quickparts_logo.JPG';
-import pdxp from '../images/pdf-doc-xls-ppt.jpg';
 import MaskGroup from '../images/MaskGroup.png'
 import BackgroundImage from '../images/background.jpg';
 import mic from '../images/mic.png'
-import record from '../images/record.png'
 import chat from '../images/chat.png'
 import videoUrl from '../images/chat_video.mp4'
 import newVideoUrl from '../images/new-video.mp4' 
