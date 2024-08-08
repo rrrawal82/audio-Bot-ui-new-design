@@ -10,8 +10,7 @@ import videoUrl from '../images/chat_video.mp4';
 import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
-import { SiFiles } from "react-icons/si";
-
+import { AiFillFileAdd } from "react-icons/ai";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -196,16 +195,20 @@ export default class AudioDemo extends Component {
                 </video>
               </div>
               <input  type="file"  multiple
-                            ref={fileInput => this.fileInput = fileInput}
-                            onChange={this.handleAddFile}  
-                            style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
-                          />
-              <div class="p-2 bd-highlight" style={{position:'relative',width:'90%',height:'380px',marginTop:'3%',fontSize:'14px',backgroundColor:'rgb(51, 51, 51)', overflowY:'hidden',maxHeight:'337px',paddingBottom:'10%',textAlign:'left'}}>
-                    {this.state.question && (<div style={{backgroundColor:'#cce0ff',padding:'9px',borderRadius: '10px',overflow:'hidden' ,float:'right',marginRight:'5px'}}>
+                ref={fileInput => this.fileInput = fileInput}
+                onChange={this.handleAddFile}  
+                style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
+              />
+              <div class="p-2 bd-highlight" 
+              className="chat-window"
+              style={{position:'relative',width:'90%',height:'380px',marginTop:'3%',fontSize:'14px',backgroundColor:'rgb(51, 51, 51)', overflowY:'hidden',maxHeight:'337px',paddingBottom:'10%',textAlign:'left'}}>
+                    {this.state.question && 
+                    (<div className="message user-question" >
                     <span>{this.state.question}</span>
                     </div>)}
                     {this.state.answer && ( <div class= "chatRequestText" 
-                    style={{backgroundColor:'rgb(51, 51, 51)',color:'white',padding:'9px',borderRadius: '10px', marginRight:'8px',marginTop:'20px',overflow:'hidden',float:'left',maxWidth:'380px'}}>
+                    className="message bot-answer"
+                    >
                     <span> {this.state.answer}</span>
                     </div>)}
                     {this.state.loadingChat && (  <div class="spinner-border spinner-border-md text-primary" style={{
@@ -248,7 +251,7 @@ export default class AudioDemo extends Component {
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer',marginRight:'70px', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
                   rows={4} onClick={() => this.fileInput.click()}
-                  ><SiFiles  size="21px"/></Button>
+                  ><AiFillFileAdd  size="21px"/></Button>
                   <Button className="sendChatBtn" id="myBtn" 
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 

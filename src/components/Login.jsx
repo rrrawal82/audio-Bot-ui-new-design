@@ -1,4 +1,4 @@
-import React, {useState}  from 'react'
+import React,{useContext, useState} from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -8,6 +8,7 @@ import Logo from '../images/logo.png';
 import {Link,useNavigate} from 'react-router-dom';
 import { AuthContext } from '../context/authContext'
 import axios from "axios"
+
 const Login = () => {
     const [inputs,setInputs]= useState({
          username:"",
@@ -21,29 +22,37 @@ const Login = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     };
-
      
     const navigate=useNavigate()
+    const {login}=useContext(AuthContext)
+
     const handleLogin=async e =>{
         e.preventDefault();
         try{
             console.log(inputs)
             if(inputs.username!='' && inputs.password!=''){
                 //const res = await axios.post("/auth/login", inputs)
-                navigate("/")
+                const res =await login(inputs)
+                if(res.status=="200")
+                {
+                    navigate("/")
+                }else if(res.status=="404")
+                {
+                  setError("Something is wrrong!Check your connection.")
+                }
             }
             else{
                 setError("Enter login and password!")     
             }
-          }catch(err){
+        }catch(err){
             setError(err.response.data)
-          }
+        }
     }
     const handleChange= e =>{
         setInputs(prev=>({...prev,[e.target.name]:e.target.value}))
     }
   return (
-    <div className="App container"style={backgroundStyle}>
+    <div className="App "style={backgroundStyle}>
         <div className='row' >
             <div className='col-sm'  >
              </div>  

@@ -50,3 +50,56 @@
   float:'right';
   position:'relative' 
 }
+.chat-window {
+  position: relative;
+  width: 90%;
+  height: 380px;
+  margin-top: 3%;
+  font-size: 14px;
+  background-color: #1e1e1e; /* Darker background for better contrast */
+  overflow-y: auto; /* Scrollable content */
+  max-height: 337px;
+  padding-bottom: 10%;
+  text-align: left;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.chat-window .message {
+  background-color: #333; /* Slightly lighter background for messages */
+  color: #f0f0f0; /* Light text color */
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 80%; /* Constrain message width */
+  word-wrap: break-word; /* Wrap long words */
+  overflow: hidden;
+}
+
+.chat-window .user-question {
+  background-color: #cce0ff; /* Light blue background for questions */
+  color: #000; /* Dark text color for contrast */
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.chat-window .bot-answer {
+  background-color: #5c3a3ad0; /* Same as message background */
+  color: #f0f0f0;
+  float: left;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.chat-window .loading-spinner {
+  margin-left: 45%;
+  position: absolute;
+  top: 100px;
+}
+
+@media (max-width: 768px) {
+  .chat-window {
+      width: 100%;
+  }
+}
