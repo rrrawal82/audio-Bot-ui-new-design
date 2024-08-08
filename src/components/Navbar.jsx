@@ -22,9 +22,10 @@ const Navbar = () => {
               {currentUser ?(
               <span><span className="text-white me-3">{currentUser?.username}</span>
 
-              <span className="text-white me-3"><Link to="/login" className="text-white text-decoration-none">
+              <span className="text-white me-3">
+                <Link to="/login" className="text-white text-decoration-none">
                     Logout
-              </Link></span></span>):
+                </Link></span></span>):
               ( <Link to="/login" className="text-white text-decoration-none">
               Login
               </Link>)
