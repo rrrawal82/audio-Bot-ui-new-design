@@ -9,7 +9,6 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
 import { AiFillFileAdd } from "react-icons/ai";
-import Animation from '../images/Animation.gif';
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
