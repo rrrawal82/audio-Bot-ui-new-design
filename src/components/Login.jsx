@@ -33,7 +33,8 @@ const Login = () => {
             if(inputs.username!='' && inputs.password!=''){
                 //const res = await axios.post("/auth/login", inputs)
                 const res =await login(inputs)
-                if(res.username!="")
+                console.log(res.username)
+                if(res.username!="" && res.username!="undefined" )
                 {
                   navigate("/")
                 }else if(res.status=="404")
