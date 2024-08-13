@@ -1,5 +1,4 @@
 import React from 'react';
-import { CDBIcon } from 'cdbreact';
 import logo from '../images/logo.png'
 import {
   CDBSidebar,

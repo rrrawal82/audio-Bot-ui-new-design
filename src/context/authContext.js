@@ -9,13 +9,14 @@ export const AuthContextProvider=({children})=>{
     const login=async(inputs)=>{
         //const res = await axios.post("/auth/login", inputs)
         try{
-            //const res=await axios.post("/auth/login",inputs);
-            const res = await axios.post("http://localhost:5000/signin", inputs);
+            
+            const res = await axios.post("http://localhost:8080/api/auth/login", inputs);
             console.log(res)
-            if(res.status=="200")
+            if(res.data)
             {
+                setcurrentUser(res.data) 
                 return res.data;
-                setcurrentUser(res.data)  
+                 
             }
         }catch(err){
             console.log(err)
@@ -24,7 +25,7 @@ export const AuthContextProvider=({children})=>{
     };
 
     const logout=async(inputs)=>{
-        await axios.post("/auth/logout");
+        await axios.post("http://localhost:8080/auth/logout");
         setcurrentUser(null)
     }
 

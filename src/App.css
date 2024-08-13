@@ -98,6 +98,7 @@
   top: 100px;
 }
 
+
 @media (max-width: 768px) {
   .chat-window {
       width: 100%;
