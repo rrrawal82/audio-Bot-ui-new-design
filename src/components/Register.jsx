@@ -28,6 +28,14 @@ const Register = () => {
         try{
           const res = await axios.post("http://localhost:8080/api/auth/register", inputs)
           //navigate("/login")
+            if(res)
+            {    
+               navigate("/")
+            }else{
+                console.log("error")
+                setError(res.response.data)
+            }
+          console.log(res)
         }catch(err){
           setError(err.response.data)
         }

@@ -25,7 +25,7 @@ const Login = () => {
      
     const navigate=useNavigate()
     const {login}=useContext(AuthContext)
-
+   
     const handleLogin=async e =>{
         e.preventDefault();
        
@@ -34,7 +34,7 @@ const Login = () => {
                 try{
                     const res =await login(inputs)
                     console.log(res)
-                    console.log(res.username)
+                    console.log(err)
                     if(res.username!='' && res.username!=undefined)
                     {    console.log("innn")
                          navigate("/chatbot")
