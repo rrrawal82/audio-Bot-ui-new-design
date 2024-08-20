@@ -24,10 +24,14 @@ const Register = () => {
       const navigate=useNavigate()
     
       const handleSubmit= async e =>{
-        e.preventDefault()
+        e.preventDefault();
+        if (inputs.password !== inputs.confirm_password) {
+            setError('Passwords do not match');
+        return;
+        }
         try{
           const res = await axios.post("http://localhost:8080/api/auth/register", inputs)
-          //navigate("/login")
+          console.log(res)
             if(res)
             {    
                navigate("/")
@@ -35,7 +39,6 @@ const Register = () => {
                 console.log("error")
                 setError(res.response.data)
             }
-          console.log(res)
         }catch(err){
           setError(err.response.data)
         }

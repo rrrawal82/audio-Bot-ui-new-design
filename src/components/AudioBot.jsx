@@ -14,8 +14,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import uploadImg from '../images/uploadImg.jpg'
-import { BsFiles } from "react-icons/bs";
-import { CgOverflow } from 'react-icons/cg';
+
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
  class AudioDemo extends Component {

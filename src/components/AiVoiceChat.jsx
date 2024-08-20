@@ -9,6 +9,7 @@ import MicRecorder from 'mic-recorder-to-mp3';
 import { IoMdSend } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
 import { AiFillFileAdd } from "react-icons/ai";
+import { AuthContext } from '../context/authContext';
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class AudioDemo extends Component {
@@ -36,7 +37,7 @@ export default class AudioDemo extends Component {
   }
 
   videoEl = createRef();
-
+  static contextType = AuthContext;
   componentDidMount() {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(() => {
@@ -69,9 +70,10 @@ export default class AudioDemo extends Component {
         const baseAudio = await this.audioToBase64(file);
         this.setState({ loading: true });
         // Send base64 audio to the backend
+        const { currentUser } = this.context;
+        const userid=currentUser?.id
         try {
-          const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio });
-          //const newVideoURL = `http://localhost:5000${response.data.output_video_url}`;
+          const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio,userid:userid});
           const newVideoURL = response.data.output_video_url;
           this.setState({ videoURL: newVideoURL, newVideo: true });
           this.setState({ output_video_url: response.data.output_video_url });
@@ -131,14 +133,16 @@ export default class AudioDemo extends Component {
     try {
       const question = this.state.userInput;
       this.setState({ loadingChat: true });
+      const { currentUser } = this.context;
+      const userid=currentUser?.id
       if (question !== '') {
-         //const response = await axios.post("http://localhost:5000/ask_question", { question: question });
-       // if (response.data) {
+        const response = await axios.post("http://localhost:5000/ask_question", { question: question,userid:userid });
+        if (response.data) {
            this.setState({ question: question });
-           // this.setState({ answer: response.data.response });
-           this.setState({ answer: "I  am good .How are you?" });
+           this.setState({ answer: response.data.response });
+           //this.setState({ answer: "I  am good .How are you?" });
            this.setState({ loadingChat: false });
-        // }
+        }
       }
     } catch (err) {
       console.error(err);
@@ -184,6 +188,7 @@ export default class AudioDemo extends Component {
   
   
   render() {
+    const { currentUser } = this.context; // Access context value using this.context
     return (
       <div className="App">
           <div class="d-flex flex-row bd-highlight mb-3">
