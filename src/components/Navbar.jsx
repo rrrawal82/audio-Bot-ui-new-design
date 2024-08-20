@@ -24,7 +24,7 @@ const Navbar = () => {
 
               <span className="text-white me-3" onclcik={logout}>
                 <Link to="/"  onClick={(e) => {
-                e.preventDefault();
+                
                 logout();
                 }} 
                 className="text-white text-decoration-none">
