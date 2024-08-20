@@ -36,11 +36,11 @@ const Login = () => {
                     console.log(res)
                     console.log(err)
                     if(res.username!='' && res.username!=undefined)
-                    {    console.log("innn")
-                         navigate("/chatbot")
+                    {    
+                        navigate("/chatbot")
                     }else{
                        console.log("error")
-                        setError(res.response.data)
+                       setError(res.response.data)
                     }
            
                 }catch(err){

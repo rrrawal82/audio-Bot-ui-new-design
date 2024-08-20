@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { AuthContext } from '../context/authContext'
 import '../index.css';
 const Navbar = () => {
-  const {currentUser}=useContext(AuthContext)
+  const {currentUser,logout}=useContext(AuthContext)
   return (
     <div>
       <nav
@@ -22,11 +22,15 @@ const Navbar = () => {
               {currentUser ?(
               <span><span className="text-white me-3">{currentUser?.username}</span>
 
-              <span className="text-white me-3">
-                <Link to="/login" className="text-white text-decoration-none">
+              <span className="text-white me-3" onclcik={logout}>
+                <Link to="/"  onClick={(e) => {
+                e.preventDefault();
+                logout();
+                }} 
+                className="text-white text-decoration-none">
                     Logout
                 </Link></span></span>):
-              ( <Link to="/login" className="text-white text-decoration-none">
+              ( <Link to="/" className="text-white text-decoration-none">
               Login
               </Link>)
               }

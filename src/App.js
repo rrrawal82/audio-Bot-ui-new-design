@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react'
 import {Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider } from 'react-router-dom';
 import {AudioBot,AudioDemo, Main,AiVoiceChat,Login, Sidebar,Navbar,Register} from './components';
@@ -12,16 +12,22 @@ const Layout =()=>{
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     width:'99%'
+    
   };
+  const[showModal,setShowModal]=useState(false)
+  
+  const handleShow= async e =>{
+    setShowModal(true);
+  }
   return (
      <div style={backgroundStyle}>
        <Row>
           <Col xs={1} id="sidebar-wrapper">      
-              <Sidebar/>
+              <Sidebar onAddClick={handleShow}/>
           </Col>
           <Col  xs={10} id="page-content-wrapper">
             <Navbar/>
-            <Outlet/>
+            <Outlet showModal={showModal}/>
           </Col>
         </Row>
      </div> 

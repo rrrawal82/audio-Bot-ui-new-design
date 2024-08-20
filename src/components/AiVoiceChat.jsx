@@ -29,7 +29,8 @@ export default class AudioDemo extends Component {
       question:'',
       answer:'',
       userInput: '',
-      files: []
+      files: [],
+      showInfo: true,
     };
     
     this.handleShow = this.handleShow.bind(this);
@@ -48,6 +49,7 @@ export default class AudioDemo extends Component {
         console.log('Permission Denied');
         this.setState({ isBlocked: true });
       });
+      console.log(this.props.showModal)
   }
 
   start = () => {
@@ -72,8 +74,9 @@ export default class AudioDemo extends Component {
         // Send base64 audio to the backend
         const { currentUser } = this.context;
         const userid=currentUser?.id
+        const token=currentUser?.verification_token
         try {
-          const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio,userid:userid});
+          const response = await axios.post("http://localhost:5000/upload_question", { audio: baseAudio,userid:userid,token:token});
           const newVideoURL = response.data.output_video_url;
           this.setState({ videoURL: newVideoURL, newVideo: true });
           this.setState({ output_video_url: response.data.output_video_url });
@@ -105,10 +108,9 @@ export default class AudioDemo extends Component {
   }
 
   handleClose() {
-    this.setState({ show: false });
-
+    this.setState({ showInfo: false });
   }
-
+  
   handleShow() {
     this.setState({ show: true });
   }
@@ -129,14 +131,16 @@ export default class AudioDemo extends Component {
       console.error(err);
     }
   };
+
   sendQuestion = async () => {
     try {
       const question = this.state.userInput;
       this.setState({ loadingChat: true });
       const { currentUser } = this.context;
       const userid=currentUser?.id
+      const token=currentUser?.verification_token
       if (question !== '') {
-        const response = await axios.post("http://localhost:5000/ask_question", { question: question,userid:userid });
+        const response = await axios.post("http://localhost:5000/ask_question", { question: question,userid:userid,token:token });
         if (response.data) {
            this.setState({ question: question });
            this.setState({ answer: response.data.response });
@@ -171,7 +175,9 @@ export default class AudioDemo extends Component {
     });
     const { currentUser } = this.context;
     const userid=currentUser?.id
+    const token=currentUser?.verification_token
     formData.append('userid', userid);
+    formData.append('token', token);
     if (this.state.files.length !== 0) {
       this.setState({ uploading: true });
      
@@ -200,6 +206,7 @@ export default class AudioDemo extends Component {
       <div className="App">
           <div class="d-flex flex-row bd-highlight mb-3">
               <div class="p-2 bd-highlight">
+                
                 <video width="600" height="400" style={{marginTop:'-1%'}} autoPlay onPlaying={this.handleVideoPlaying} onEnded={this.handleVideoEnd} id="chatVideo">
                    <source src={this.state.videoURL} type="video/mp4" />
                 </video>
@@ -228,7 +235,7 @@ export default class AudioDemo extends Component {
                     ) }
               </div>
            </div>
-            
+           {this.props.showModal}
             {this.state.loading && (  <div class="spinner-border spinner-border-md text-primary" style={{
                    marginLeft: "50%",
                }} role="status">
@@ -240,7 +247,28 @@ export default class AudioDemo extends Component {
                 <FaUpload size="42px" />
              </Button>
             */}
-            
+            {/* Modal for instructions */}
+            <Modal show={this.state.showInfo} onHide={this.handleClose} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Instructions</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Welcome to the Chatbot application!</p>
+                <p>Before you can start interacting with the chatbot, please upload at least one file. This step is necessary to ensure that the chatbot has the information it needs to assist you effectively.</p>
+                <p>Here's how you can upload a file:</p>
+                <ul>
+                  <li>Click the 'Upload' button in the sidebar.</li>
+                  <li>Select the file(s) you want to upload from your computer.</li>
+                  <li>Once the upload is complete, you will be able to start chatting with the chatbot.</li>
+                </ul>
+                <p>If you need any help with uploading files or have other questions, please refer to our support documentation or contact our support team.</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <div style={{position:'absolute',bottom:'0px',marginTop:'10px'}}>
                   <textarea
                   onChange={this.handleInputChange} 

@@ -16,7 +16,6 @@ export const AuthContextProvider=({children})=>{
             {
                 setcurrentUser(res.data) 
                 return res.data;
-                 
             }
         }catch(err){
             console.log(err)
@@ -25,7 +24,7 @@ export const AuthContextProvider=({children})=>{
     };
 
     const logout=async(inputs)=>{
-        await axios.post("http://localhost:8080/auth/logout");
+        await axios.post("http://localhost:8080/api/auth/logout");
         setcurrentUser(null)
     }
 

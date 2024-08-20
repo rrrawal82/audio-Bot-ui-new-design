@@ -10,16 +10,14 @@ import {
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar  = ({ onAddClick })=> {
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#333" toggled >
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
         <div className="container" style={{ display: 'flex', alignItems: 'center' }}>
-         
-                <img src={logo} alt="" style={{width:"150px"}}/>
-         
-          </div>
+             <img src={logo} alt="" style={{width:"150px"}}/>
+        </div>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
@@ -27,7 +25,11 @@ const Sidebar = () => {
             <NavLink exact to="/" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/audioBot" activeClassName="activeClicked">
+            <NavLink exact to="/" onClick={(e) => {
+                  e.preventDefault();
+                  onAddClick();
+                }} 
+                activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="plus" >Add</CDBSidebarMenuItem>
             </NavLink>
             {/*<NavLink exact to="/profile" activeClassName="activeClicked">
