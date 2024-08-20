@@ -169,7 +169,9 @@ export default class AudioDemo extends Component {
     this.state.files.forEach(file => {
       formData.append('file', file);
     });
-
+    const { currentUser } = this.context;
+    const userid=currentUser?.id
+    formData.append('userid', userid);
     if (this.state.files.length !== 0) {
       this.setState({ uploading: true });
      
