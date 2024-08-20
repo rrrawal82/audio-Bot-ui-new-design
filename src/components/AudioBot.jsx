@@ -89,25 +89,25 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
       if (this.state.files.length !== 0) {
         this.setState({ uploading: true });
        
-        // try {
-        //   const res = await axios.post("http://localhost:5000/upload_document", formData, {
-        //     onUploadProgress: (progressEvent) => {
-        //       const progress = Math.round(
-        //         (progressEvent.loaded / progressEvent.total) * 100
-        //       );
-        //       this.setState({uploadProgress:progress});
-        //     },
-        //   });
-          // console.log('File uploaded successfully:', res.data);
-          // if(res.data)
-          // {
+        try {
+           const res = await axios.post("http://localhost:5000/upload_document", formData, {
+             onUploadProgress: (progressEvent) => {
+               const progress = Math.round(
+                 (progressEvent.loaded / progressEvent.total) * 100
+               );
+               this.setState({uploadProgress:progress});
+             },
+           });
+           console.log('File uploaded successfully:', res.data);
+           if(res.data)
+           {
              this.props.navigate('/chatbot');
-         // }
-        // } catch (err) {
-        //   console.error('Error uploading file:', err);
-        // } finally {
-        //   this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
-        // }
+          }
+         } catch (err) {
+           console.error('Error uploading file:', err);
+         } finally {
+           this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
+         }
        
       } else {
         alert('Select at least one file to upload.');

@@ -164,28 +164,33 @@ export default class AudioDemo extends Component {
       this.uploadFiles();
     });
   };
-    uploadFiles = async () => {
-      const { files } = this.state;
-      if (files.length === 0) return;
-  
-      this.setState({ loading: true });
-  
-      const formData = new FormData();
-      files.forEach(file => formData.append('files', file));
-      
-  
+  uploadFiles = async () => {
+    const formData = new FormData();
+    this.state.files.forEach(file => {
+      formData.append('file', file);
+    });
+
+    if (this.state.files.length !== 0) {
+      this.setState({ uploading: true });
+     
       try {
-        const response = await axios.post('http://localhost:5000/upload_files', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+        const res = await axios.post("http://localhost:5000/upload_document", formData, {
         });
-        console.log('Files uploaded successfully:', response.data);
-      } catch (error) {
-        console.error('Error uploading files:', error);
+         console.log('File uploaded successfully:', res.data);
+        if(res.data)
+        {
+          this.props.navigate('/chatbot');
+        }
+      } catch (err) {
+        console.error('Error uploading file:', err);
       } finally {
-        this.setState({ loading: false });
+        this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
       }
-    };
-  
+     
+    } else {
+      alert('Select at least one file to upload.');
+    }
+};
   
   render() {
     const { currentUser } = this.context; // Access context value using this.context
