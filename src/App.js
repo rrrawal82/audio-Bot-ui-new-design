@@ -1,46 +1,50 @@
-import React,{useState} from 'react'
+import React, { useState, useContext, useEffect } from 'react';
 import {Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Routes, Route,Link,NavLink,Outlet,RouterProvider,Navigate  } from 'react-router-dom';
 import {AudioBot,AudioDemo, Main,AiVoiceChat,Login, Sidebar,Navbar,Register} from './components';
-
+import { AuthContext } from './context/authContext';
 import './index.css';
-const Layout =()=>{
+import ProtectedRoute from './components/ProtectedRoute';
+const Layout = () => {
   const backgroundStyle = {
     backgroundColor: 'black',
     height: "100vh",
-    //fontSize: "50px",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    width:'99%'
-    
+    width: '99%'
   };
-  const[showModal,setShowModal]=useState(false)
-  
-  const handleShow= async e =>{
-    setShowModal(true);
-  }
-  return (
-     <div style={backgroundStyle}>
-       <Row>
-          <Col xs={1} id="sidebar-wrapper">      
-              <Sidebar onAddClick={handleShow}/>
-          </Col>
-          <Col  xs={10} id="page-content-wrapper">
-            <Navbar/>
-            <Outlet showModal={showModal}/>
-          </Col>
-        </Row>
-     </div> 
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalShow = async e => {
+    setShowModal(true);
+  };
+  const handleValueChange = (newValue) => {
+    setShowModal(newValue);
+  };
+  
+  return (
+    <div style={backgroundStyle}>
+      <Row>
+        <Col xs={1} id="sidebar-wrapper">
+          <Sidebar onAddClick={handleModalShow} />
+        </Col>
+        <Col xs={10} id="page-content-wrapper">
+          <Navbar />
+          <AiVoiceChat showModal={showModal} onValueChange={handleValueChange} />
+        </Col>
+      </Row>
+    </div>
   );
-}
+};
+
 const router = createBrowserRouter([
   {
     path: "/chatbot",
-    element: <Layout />,
+    element:  <ProtectedRoute element={<Layout />} />,
     children: [
       {
-        index: true, // Equivalent to path: "/"
+        index: true,
         element: <AiVoiceChat />,
       },
       {
@@ -55,17 +59,18 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register/>,
+    element: <Register />,
   },
 ]);
 
 function App() {
-    return (
-      <div className="app">
-         <div className="">
-            <RouterProvider router={router}/>
-         </div>
-      </div>
-    );
-  }
+  const { currentUser } = useContext(AuthContext);
+
+  return (
+    <div className="app">
+       <RouterProvider router={router} />
+    </div>
+  );
+}
+
 export default App;

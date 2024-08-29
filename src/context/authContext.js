@@ -9,9 +9,7 @@ export const AuthContextProvider=({children})=>{
     const login=async(inputs)=>{
         //const res = await axios.post("/auth/login", inputs)
         try{
-            
             const res = await axios.post("http://localhost:8080/api/auth/login", inputs);
-            console.log(res)
             if(res.data)
             {
                 setcurrentUser(res.data) 

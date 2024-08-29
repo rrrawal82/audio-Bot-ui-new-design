@@ -17,6 +17,7 @@ export default class AudioDemo extends Component {
     super(props);
     this.state = {
       blobURL: '',
+      files_uploaded:0,
       isBlocked: false,
       show: false,
       isRecording: false,
@@ -36,10 +37,26 @@ export default class AudioDemo extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-
+  
   videoEl = createRef();
   static contextType = AuthContext;
+  componentDidUpdate(prevProps) { console.log(this.props.showModal)
+    
+    // Check if someProp has changed
+    if (prevProps.showModal !== this.props.showModal) {
+       if(this.props.showModal==true)
+       {
+        this.fileInput.click()
+       }
+      // Perform an action when someProp changes
+      console.log('someProp has changed:', this.props.showModal);
+    }
+  }
   componentDidMount() {
+    const { currentUser } = this.context;
+        const filesUploaded=currentUser?.files_uploaded
+          this.setState({files_uploaded: filesUploaded});
+    console.log(currentUser?.files_uploaded)
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(() => {
         console.log('Permission Granted');
@@ -49,7 +66,7 @@ export default class AudioDemo extends Component {
         console.log('Permission Denied');
         this.setState({ isBlocked: true });
       });
-      console.log(this.props.showModal)
+   
   }
 
   start = () => {
@@ -70,7 +87,7 @@ export default class AudioDemo extends Component {
         const blobURL = URL.createObjectURL(blob)
         const file = new File(buffer, 'audio.mp3', { type: blob.type, lastModified: Date.now() });
         const baseAudio = await this.audioToBase64(file);
-        this.setState({ loading: true });
+        this.setState({ loadingChat: true });
         // Send base64 audio to the backend
         const { currentUser } = this.context;
         const userid=currentUser?.id
@@ -104,7 +121,7 @@ export default class AudioDemo extends Component {
     let vid = document.getElementById("chatVideo");
     vid.src = newVideoUrl;
     this.setState({ newVideo: true });
-    this.setState({ loading: false });
+    this.setState({ loadingChat: false });
   }
 
   handleClose() {
@@ -135,11 +152,11 @@ export default class AudioDemo extends Component {
   sendQuestion = async () => {
     try {
       const question = this.state.userInput;
-      this.setState({ loadingChat: true });
       const { currentUser } = this.context;
       const userid=currentUser?.id
       const token=currentUser?.verification_token
       if (question !== '') {
+        this.setState({ loadingChat: true });
         const response = await axios.post("http://localhost:5000/ask_question", { question: question,userid:userid,token:token });
         if (response.data) {
            this.setState({ question: question });
@@ -147,12 +164,14 @@ export default class AudioDemo extends Component {
            //this.setState({ answer: "I  am good .How are you?" });
            this.setState({ loadingChat: false });
         }
+      }else{
+        this.state.userInput.focus()
       }
     } catch (err) {
       console.error(err);
     }
   };
-  
+ 
   handleVideoPlaying = () => {
     this.setState({ micDisable: false });
   };
@@ -167,7 +186,11 @@ export default class AudioDemo extends Component {
       // Trigger file upload after file selection
       this.uploadFiles();
     });
+    this.props.onValueChange(false);
   };
+  handleFileUploadClose=(e)=>{
+    this.props.onValueChange(false);
+ }
   uploadFiles = async () => {
     const formData = new FormData();
     this.state.files.forEach(file => {
@@ -182,19 +205,19 @@ export default class AudioDemo extends Component {
       this.setState({ uploading: true });
      
       try {
-        const res = await axios.post("http://localhost:5000/upload_document", formData, {
-        });
-         console.log('File uploaded successfully:', res.data);
+        const res1 = await axios.post("http://localhost:8080/api/auth/uploadDocs",{userid:userid});
+        const res = await axios.post("http://localhost:5000/upload_document", formData, {});
+       
+         //console.log('File uploaded successfully:', res.data);
         if(res.data)
         {
-          this.props.navigate('/chatbot');
+            this.props.navigate('/chatbot');
         }
       } catch (err) {
         console.error('Error uploading file:', err);
       } finally {
         this.setState({ uploading: false, uploadProgress: 0 }); // Reset after upload
       }
-     
     } else {
       alert('Select at least one file to upload.');
     }
@@ -202,6 +225,14 @@ export default class AudioDemo extends Component {
   
   render() {
     const { currentUser } = this.context; // Access context value using this.context
+    const progressBarStyle = {
+      width: `${this.state.uploadProgress}%`,
+      height: "5px",
+      backgroundColor: "blue",
+      position: "absolute",
+      top: 0,
+      left: 0,
+    };
     return (
       <div className="App">
           <div class="d-flex flex-row bd-highlight mb-3">
@@ -214,6 +245,7 @@ export default class AudioDemo extends Component {
               <input  type="file"  multiple
                 ref={fileInput => this.fileInput = fileInput}
                 onChange={this.handleAddFile}  
+                onClose={this.handleFileUploadClose}
                 style= {{color:'white',border: 'none',cursor:'pointer',marginLeft:'38%', display: 'none' }}
               />
               <div class="p-2 bd-highlight" 
@@ -233,9 +265,23 @@ export default class AudioDemo extends Component {
                       }} role="status">
                     </div>
                     ) }
+                     {this.state.uploading && (
+                      <div className="progress" style={{ marginTop: '50px',width:'70%',marginLeft:'10px'}}>
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{ width: `${this.state.uploadProgress}%` }}
+                          aria-valuenow={this.state.uploadProgress}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                        <div>Upload Progress: {this.state.uploadProgress}%</div>
+                        </div>
+                      </div>
+                    )}
               </div>
            </div>
-           {this.props.showModal}
+          
             {this.state.loading && (  <div class="spinner-border spinner-border-md text-primary" style={{
                    marginLeft: "50%",
                }} role="status">
@@ -276,24 +322,27 @@ export default class AudioDemo extends Component {
                   style={{width:'82vw',background: 'rgb(51, 51, 51)',color:'white',border:'0px',marginLeft:'5px',padding:'7px',fontSize:'14px',display:'block' ,bottom:'50px',marginBottom:'50px',borderRadius:'10px' }} placeholder='Type your message'/>
                   {this.state.isRecording ? (
                   <Button className="open-button"  onClick={this.stop}  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-98px', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}}  disabled={this.state.micDisable}>
+                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}} 
+                   disabled={this.state.micDisable|| !this.state.files_uploaded}>
                   <FaMicrophone size="18px" color='blue'/>
                   </Button>
                   ) : (
                   <Button className="open-button" onClick={this.start}  style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-98px', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}}  disabled={this.state.isRecording}>
+                  borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'10px',float:'right',position:'relative' ,marginRight:'35px'}} 
+                   disabled={this.state.isRecording || !this.state.files_uploaded}>
                  <FaMicrophone size="18px"/>
                   </Button>
                   )}
-                  <Button className="sendChatBtn" id="myBtn" 
+                  {/* <Button className="sendChatBtn" id="myBtn" 
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer',marginRight:'70px', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
                   rows={4} onClick={() => this.fileInput.click()}
-                  ><AiFillFileAdd  size="21px"/></Button>
+                  ><AiFillFileAdd  size="21px"/></Button> */}
                   <Button className="sendChatBtn" id="myBtn" 
                   style={{ backgroundColor:'rgb(51, 51, 51)', color: 'white', padding: '10px 10px',marginTop:'-100px', border: 'none', 
                   borderRadius: '8px', cursor: 'pointer', width: '50px',fontSize:'12px',float:'right',position:'relative' ,}} 
                   onClick={this.sendQuestion}
+                  disabled={!this.state.files_uploaded}
                   rows={4}
                   ><IoMdSend size="23px"/></Button>
             </div>
