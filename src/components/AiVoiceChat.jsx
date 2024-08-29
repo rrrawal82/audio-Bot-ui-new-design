@@ -54,9 +54,9 @@ export default class AudioDemo extends Component {
   }
   componentDidMount() {
     const { currentUser } = this.context;
-        const filesUploaded=currentUser?.files_uploaded
-          this.setState({files_uploaded: filesUploaded});
-    console.log(currentUser?.files_uploaded)
+    const filesUploaded=currentUser?.files_uploaded
+    this.setState({files_uploaded: filesUploaded});
+    
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(() => {
         console.log('Permission Granted');
@@ -205,13 +205,12 @@ export default class AudioDemo extends Component {
       this.setState({ uploading: true });
      
       try {
-        const res1 = await axios.post("http://localhost:8080/api/auth/uploadDocs",{userid:userid});
         const res = await axios.post("http://localhost:5000/upload_document", formData, {});
-       
          //console.log('File uploaded successfully:', res.data);
         if(res.data)
         {
-            this.props.navigate('/chatbot');
+          const res1 = await axios.post("http://localhost:8080/api/auth/uploadDocs",{userid:userid});
+          this.props.navigate('/chatbot');
         }
       } catch (err) {
         console.error('Error uploading file:', err);
