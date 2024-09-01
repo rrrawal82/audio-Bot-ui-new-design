@@ -57,15 +57,15 @@ export default class AudioDemo extends Component {
     const filesUploaded=currentUser?.files_uploaded
     this.setState({files_uploaded: filesUploaded});
     
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(() => {
-        console.log('Permission Granted');
-        this.setState({ isBlocked: false });
-      })
-      .catch(() => {
-        console.log('Permission Denied');
-        this.setState({ isBlocked: true });
-      });
+    // navigator.mediaDevices.getUserMedia({ audio: true })
+    //   .then(() => {
+    //     console.log('Permission Granted');
+    //     this.setState({ isBlocked: false });
+    //   })
+    //   .catch(() => {
+    //     console.log('Permission Denied');
+    //     this.setState({ isBlocked: true });
+    //   });
    
   }
 
