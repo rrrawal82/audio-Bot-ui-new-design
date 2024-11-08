@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d70ac4e7.css",
+    "main.js": "/static/js/main.95fef2c9.js",
+    "static/js/787.91537aca.chunk.js": "/static/js/787.91537aca.chunk.js",
+    "static/media/chat_video.mp4": "/static/media/chat_video.1a7d9824b9abdb29bfcb.mp4",
+    "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
+    "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.2f517e09eb2ca6650ff5.svg",
+    "static/media/new-video.mp4": "/static/media/new-video.a5477dfb5703d7ad726d.mp4",
+    "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.9bbb245e67a133f6e486.eot",
+    "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.be9ee23c0c6390141475.ttf",
+    "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.4689f52cc96215721344.svg",
+    "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.23f19bb08961f37aaf69.eot",
+    "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.527940b104eb2ea366c8.ttf",
+    "static/media/background.jpg": "/static/media/background.a5eb9258b5701112178d.jpg",
+    "static/media/fa-solid-900.woff": "/static/media/fa-solid-900.eeccf4f66002c6f2ba24.woff",
+    "static/media/fa-brands-400.woff": "/static/media/fa-brands-400.2285773e6b4b172f07d9.woff",
+    "static/media/fa-solid-900.woff2": "/static/media/fa-solid-900.1551f4f60c37af51121f.woff2",
+    "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.d878b0a6a1144760244f.woff2",
+    "static/media/MaskGroup.png": "/static/media/MaskGroup.dc85166369165c31ac33.png",
+    "static/media/fa-regular-400.eot": "/static/media/fa-regular-400.77206a6bb316fa0aded5.eot",
+    "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.491974d108fe4002b2aa.ttf",
+    "static/media/fa-regular-400.woff": "/static/media/fa-regular-400.bb58e57c48a3e911f15f.woff",
+    "static/media/mic.png": "/static/media/mic.5ba8d348872359e0dcdf.png",
+    "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.7a3337626410ca2f4071.woff2",
+    "static/media/chat.png": "/static/media/chat.335bbda587567af485e0.png",
+    "index.html": "/index.html",
+    "main.d70ac4e7.css.map": "/static/css/main.d70ac4e7.css.map",
+    "main.95fef2c9.js.map": "/static/js/main.95fef2c9.js.map",
+    "787.91537aca.chunk.js.map": "/static/js/787.91537aca.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d70ac4e7.css",
+    "static/js/main.95fef2c9.js"
+  ]
+}
