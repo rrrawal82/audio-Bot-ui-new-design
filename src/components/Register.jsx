@@ -22,7 +22,8 @@ const Register = () => {
       }
     
       const navigate=useNavigate()
-    
+      const {register}=useContext(AuthContext)
+
       const handleSubmit= async e =>{
         e.preventDefault();
         if (inputs.password !== inputs.confirm_password) {
@@ -30,8 +31,8 @@ const Register = () => {
         return;
         }
         try{
-          const res = await axios.post("http://localhost:8080/api/auth/register", inputs)
-          console.log(res)
+            const res =await register(inputs)
+            console.log(res)
             if(res)
             {    
                navigate("/")
